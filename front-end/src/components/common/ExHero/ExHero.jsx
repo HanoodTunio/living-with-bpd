@@ -1,0 +1,88 @@
+import React from "react";
+import { Box, Typography } from "@mui/material";
+import heroImage from "../../../assets/images/ExHero.png"; // Replace with your actual image path
+
+const ExHero = () => {
+  return (
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: { xs: "column", md: "row" }, // Stacks on small screens, side-by-side on medium+
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "32px",
+      }}
+    >
+      {/* Left Column: Image */}
+      <Box
+        sx={{
+          flex: 1,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          marginBottom: { xs: "24px", md: "5px" }, // Space between columns for small screens
+        }}
+      >
+        <img
+          src={heroImage}
+          alt="Mindfulness Illustration"
+          style={{
+            maxWidth: "90%",
+            height: "auto",
+            borderRadius: "8px", // Slightly rounded corners
+          }}
+        />
+      </Box>
+
+      {/* Right Column: Text */}
+      <Box
+        sx={{
+          flex: 1,
+          paddingLeft: { md: "200px" }, // Add space on medium+ screens
+          textAlign: { xs: "center", md: "left" }, // Centered on small screens
+        }}
+      >
+        <Typography
+          variant="h4"
+          sx={{
+            fontFamily: "Roboto, sans-serif",
+            fontWeight: "bold",
+            color: "#00796b", // Text color for the heading
+            marginBottom: "16px",
+          }}
+        >
+          DBT Mindfulness
+        </Typography>
+
+        <Typography
+          variant="h6"
+          sx={{
+            fontFamily: "Roboto, sans-serif",
+            fontWeight: "medium",
+            color: "#464343", // Text color for subheading
+            marginBottom: "16px",
+          }}
+        >
+          Exercises and Worksheets
+        </Typography>
+
+        <Typography
+          variant="body1"
+          sx={{
+            fontFamily: "Roboto, sans-serif",
+            fontSize: "16px",
+            lineHeight: "1.6",
+            color: "#464343",
+          }}
+        >
+          Mindfulness is the foundation skill for DBT. These 10 exercises teach
+          you to observe your thoughts and feelings non-judgmentally, setting
+          the stage for <strong>emotion regulation, distress tolerance,</strong>{" "}
+          and <strong>interpersonal effectiveness.</strong>
+        </Typography>
+      </Box>
+    </Box>
+  );
+};
+
+export default ExHero;

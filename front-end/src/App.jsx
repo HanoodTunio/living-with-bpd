@@ -57,57 +57,28 @@
 // //   );
 // // };
 
-// // export default App;
-
 import React from "react";
-import ExerciseCard from "./components/common/ExerciseCard/ExerciseCard";
-import exImage from "./assets/images/ex.png";
+import { Box } from "@mui/material";
+import backgroundImage from "./assets/images/backgroundColor.jpg"; // Background image
+import SelectExercisePage from "./pages/SelectExercisePage";
 
 const App = () => {
   return (
-    <div
-      style={{
+    <Box
+      sx={{
+        minHeight: "100vh", // Use 100vh for full viewport height
+        backgroundImage: `url(${backgroundImage})`, // Ensure the path is correct
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
         display: "flex",
-        gap: "16px",
-        justifyContent: "center",
-        padding: "32px",
+        flexDirection: "column", // Allow content to stack naturally
+        alignItems: "center",
+        padding: "16px",
       }}
     >
-      <ExerciseCard
-        exerciseTitle="Exercise M1"
-        exerciseImage={exImage}
-        exerciseName="Observing"
-        exerciseDescription="Start developing your mindfulness skills by observing a single object."
-      />
-
-      <ExerciseCard
-        exerciseTitle="Exercise M2"
-        exerciseImage={exImage}
-        exerciseName="Focusing"
-        exerciseDescription="Learn to focus on your breathing to enhance your mindfulness."
-      />
-
-      <ExerciseCard
-        exerciseTitle="Exercise M3"
-        exerciseImage={exImage}
-        exerciseName="Listening"
-        exerciseDescription="Improve your mindfulness by focusing on ambient sounds."
-      />
-
-      <ExerciseCard
-        exerciseTitle="Exercise M3"
-        exerciseImage={exImage}
-        exerciseName="Listening"
-        exerciseDescription="Improve your mindfulness by focusing on ambient sounds."
-      />
-
-      <ExerciseCard
-        exerciseTitle="Exercise M3"
-        exerciseImage={exImage}
-        exerciseName="Listening"
-        exerciseDescription="Improve your mindfulness by focusing on ambient sounds."
-      />
-    </div>
+      <SelectExercisePage />
+    </Box>
   );
 };
 

@@ -1,35 +1,47 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle"; // Example icon
 import {
   cardStyles,
-  iconContainerStyles,
   titleStyles,
   subtitleStyles,
   descriptionStyles,
 } from "./ExerciseCardStyles";
 
-const ExerciseCard = () => {
+const ExerciseCard = ({
+  exerciseTitle,
+  exerciseImage,
+  exerciseName,
+  exerciseDescription,
+}) => {
   return (
     <Box sx={cardStyles}>
       {/* Title */}
       <Typography variant="h6" sx={titleStyles}>
-        Exercise M1
+        {exerciseTitle}
       </Typography>
 
-      {/* Icon Container */}
-      <Box sx={iconContainerStyles}>
-        <AccountCircleIcon sx={{ fontSize: "64px", color: "#1d3557" }} />
-      </Box>
+      {/* Image */}
+      {exerciseImage && (
+        <img
+          src={exerciseImage}
+          alt={`${exerciseName} illustration`}
+          style={{
+            width: "100%", // Full width of the card
+            height: "auto", // Maintain aspect ratio
+            borderRadius: "8px", // Slightly rounded corners
+            objectFit: "cover", // Ensure proper scaling
+          }}
+        />
+      )}
 
       {/* Subtitle */}
       <Typography variant="h6" sx={subtitleStyles}>
-        Observing
+        {exerciseName}
       </Typography>
 
       {/* Description */}
       <Typography variant="body2" sx={descriptionStyles}>
-        Start developing your mindfulness skills by observing a single object.
+        {exerciseDescription}
       </Typography>
     </Box>
   );
