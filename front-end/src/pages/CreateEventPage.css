@@ -1,0 +1,56 @@
+/* Enforce full-page container consistency */
+.create-event-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 16px;
+  min-height: 100vh;
+  //background: linear-gradient(to bottom, #eafaff, #ffffff);
+  overflow-y: scroll; /* Prevent layout shifts caused by scrollbar */
+  box-sizing: border-box;
+}
+
+/* The consistent box for both steps */
+.create-event-step-container {
+  width: 600px; /* Lock width for all steps */
+  max-width: 100%; /* Allow responsiveness if smaller screens */
+  //background: #ffffff;
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 24px; /* Spacing between child components */
+  box-sizing: border-box; /* Prevent padding from affecting width */
+}
+
+/* Progress bar alignment */
+.create-event-progress-bar {
+  width: 600px; /* Matches step container width */
+  max-width: 100%; /* Responsive */
+  margin-bottom: 32px;
+}
+
+/* Header alignment */
+.create-event-header {
+  display: flex;
+  align-items: center;
+  width: 600px; /* Matches step container width */
+  max-width: 100%; /* Responsive */
+  margin-bottom: 24px;
+}
+
+.create-event-header h5 {
+  font-weight: bold;
+  color: #1d3557;
+  margin-left: 8px;
+}
+
+/* Button row for navigation */
+.create-event-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 16px;
+}
