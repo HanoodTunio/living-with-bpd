@@ -8,6 +8,7 @@ import AboutSection from "../components/common/About/AboutSection";
 import SupportProjectSection from "../components/common/SupportProjectsSection/SupportProjectsSection";
 import TeamSection from "../components/common/TeamSection/TeamSection";
 import { Box } from "@mui/material";
+import InfoSection from "../components/common/InfoSection/InfoSection";
 
 const LandingPage = () => {
   return (
@@ -15,6 +16,18 @@ const LandingPage = () => {
       {/* Hero Section (Not Centered) */}
       <Hero />
       <Divider />
+
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "column",
+          width: "100%",
+        }}
+      >
+        <InfoSection />
+      </Box>
 
       {/* Centered Blog Section */}
       <Box
