@@ -8,7 +8,8 @@ const MainLayout = ({ children }) => {
   return (
     <Box
       sx={{
-        minHeight: "120vh", // Ensure the page takes up the full viewport height
+        height: "100%", // Ensure the Box spans the entire viewport
+        minHeight: "100vh", // Ensure the page takes up the full viewport height
         backgroundImage: `url(${backgroundImage})`, // Background image
         backgroundSize: "cover", // Cover the whole container
         backgroundPosition: "center", // Center-align the background image
@@ -17,6 +18,9 @@ const MainLayout = ({ children }) => {
         flexDirection: "column", // Stack items vertically
         justifyContent: "flex-start", // Align items at the top
         boxSizing: "border-box", // Include padding in the box model
+        margin: 0, // Ensure no margin
+        padding: 0, // Ensure no padding
+        overflow: "hidden",
       }}
     >
       {/* Header Section */}
