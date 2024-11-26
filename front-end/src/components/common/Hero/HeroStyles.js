@@ -1,19 +1,22 @@
 // src/components/HeroStyles.js
+import heroBackground from "/src/assets/images/hero.png"; // Adjust path if needed
+
 
 const heroStyles = {
   heroContainer: {
     position: 'relative',
     height: { xs: '400px', sm: '450px', md: '500px' },
     display: 'flex',
+    width: '100%',
     alignItems: 'center',
     justifyContent: 'flex-start',
     overflow: 'hidden',
     borderRadius: '10px',
-    backgroundImage: 'url("/src/assets/images/hero.png")',
+    backgroundImage: `url(${heroBackground})`,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
-    paddingLeft: { xs: '5px', md: '10px' },
+    paddingLeft: { xs: '5px', md: '12px' },
     '&::before': {
       content: '""',
       position: 'absolute',

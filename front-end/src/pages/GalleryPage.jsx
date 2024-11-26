@@ -1,28 +1,15 @@
 import React from "react";
 import { Box, Grid2, Typography, Card, CardMedia, Button } from "@mui/material";
-
-// Local images
+import MainLayout from "../components/mainlayout/MainLayout"; // Import MainLayout
 import g1 from "../assets/images/g1.png";
 import g2 from "../assets/images/g2.png";
-import Header from "../components/mainlayout/Header/Header";
-import Footer from "../components/mainlayout/Footer/Footer";
 
 const images = [g1, g2, g1, g2, g1, g2, g1, g2]; // Repeat images for demo
+const hexagonImages = [g1, g2, g1, g2, g1, g2]; // Use for the polygon grid in HeroSection
 
 const GalleryPage = () => {
-  const hexagonImages = [g1, g2, g1, g2, g1, g2]; // Use for the polygon grid in HeroSection
-
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        minHeight: "100vh", // Ensure the layout spans the full viewport height
-      }}
-    >
-      {/* Header */}
-      <Header />
-
+    <MainLayout>
       {/* Hero Section */}
       <Box
         sx={{
@@ -127,7 +114,7 @@ const GalleryPage = () => {
             <Box
               key={index}
               sx={{
-                width: "150px", // Increased size for larger polygons
+                width: "150px",
                 height: "150px",
                 backgroundImage: `url(${image})`,
                 backgroundSize: "cover",
@@ -175,14 +162,14 @@ const GalleryPage = () => {
             <Grid2 item xs={12} sm={6} md={4} key={index}>
               <Card
                 sx={{
-                  position: "relative", // For overlay positioning
+                  position: "relative",
                   borderRadius: "16px",
                   overflow: "hidden",
                   boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
                   transition: "transform 0.3s ease, box-shadow 0.3s ease",
                   "&:hover": {
-                    transform: "scale(1.05)", // Zoom effect
-                    boxShadow: "0px 8px 30px rgba(0, 0, 0, 0.2)", // Shadow on hover
+                    transform: "scale(1.05)",
+                    boxShadow: "0px 8px 30px rgba(0, 0, 0, 0.2)",
                   },
                 }}
               >
@@ -193,10 +180,10 @@ const GalleryPage = () => {
                   sx={{
                     height: "250px",
                     objectFit: "cover",
-                    filter: "brightness(0.9)", // Slightly darken the image
+                    filter: "brightness(0.9)",
                     transition: "filter 0.3s ease",
                     "&:hover": {
-                      filter: "brightness(0.7)", // Darken on hover
+                      filter: "brightness(0.7)",
                     },
                   }}
                 />
@@ -205,22 +192,7 @@ const GalleryPage = () => {
           ))}
         </Grid2>
       </Box>
-
-      {/* Footer */}
-      <Box
-        sx={{
-          backgroundColor: "none",
-          color: "white",
-          textAlign: "center",
-          padding: "0px",
-          width: "98vw",
-          position: "relative",
-          left: 0,
-        }}
-      >
-        <Footer />
-      </Box>
-    </Box>
+    </MainLayout>
   );
 };
 

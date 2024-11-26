@@ -4,8 +4,15 @@ import React from "react";
 import { Box, Typography, Button } from "@mui/material";
 import heroStyles from "./HeroStyles";
 import peopleImage from "/src/assets/images/people.png";
+import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
+  const navigate = useNavigate();
+
+  const handleSignUp = () => {
+    console.log("Navigating to /login"); // Debug log
+    navigate("/login");
+  };
   return (
     <Box sx={heroStyles.heroContainer}>
       {/* Overlay Image of Two People */}
@@ -25,7 +32,11 @@ const Hero = () => {
         </Typography>
 
         {/* Join Now Button */}
-        <Button variant="contained" sx={heroStyles.joinButton}>
+        <Button
+          variant="contained"
+          onClick={handleSignUp}
+          sx={heroStyles.joinButton}
+        >
           Join Now
         </Button>
       </Box>

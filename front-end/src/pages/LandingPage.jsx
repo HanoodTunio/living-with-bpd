@@ -1,33 +1,83 @@
-// src/pages/Home.jsx
 import React from "react";
-import Header from "../components/mainlayout/Header/Header";
+import MainLayout from "../components/mainlayout/MainLayout"; // Path to your MainLayout component
 import Hero from "../components/common/Hero/Hero";
-import BlogSection from "../components/Specific/BlogSection/BlogSection.jsx";
-import EventSection from "../components/Specific/EventSection/EventsSection.jsx";
+import BlogSection from "../components/Specific/BlogSection/BlogSection";
+import EventSection from "../components/Specific/EventSection/EventsSection";
 import Divider from "../components/common/CustomDivider/CustomDivider";
 import AboutSection from "../components/common/About/AboutSection";
 import SupportProjectSection from "../components/common/SupportProjectsSection/SupportProjectsSection";
 import TeamSection from "../components/common/TeamSection/TeamSection";
-import Footer from "../components/mainlayout/Footer/Footer";
+import { Box } from "@mui/material";
 
 const LandingPage = () => {
   return (
-    <>
-      <Header />
+    <MainLayout>
+      {/* Hero Section (Not Centered) */}
       <Hero />
       <Divider />
-      <BlogSection />
+
+      {/* Centered Blog Section */}
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "column",
+          width: "100%",
+        }}
+      >
+        <BlogSection />
+      </Box>
       <Divider />
-      <EventSection />
+
+      {/* Centered Event Section */}
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "column",
+          width: "100%",
+        }}
+      >
+        <EventSection />
+      </Box>
       <Divider />
-      <AboutSection />
+      {/* AboutSection */}
+      <Box
+        id="about"
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "column",
+          width: "100%",
+        }}
+      >
+        <AboutSection />
+      </Box>
+
       <Divider />
-      <SupportProjectSection />
+
+      {/* Centered Support Project Section */}
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "column",
+          width: "100%",
+        }}
+      >
+        <SupportProjectSection />
+      </Box>
       <Divider />
-      <TeamSection />
-      <Divider />
-      <Footer />
-    </>
+
+      {/* Team Section (Not Centered) */}
+      <Box id="team">
+        <TeamSection />
+      </Box>
+    </MainLayout>
   );
 };
 

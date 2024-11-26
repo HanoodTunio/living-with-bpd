@@ -1,18 +1,14 @@
 import React from "react";
 import { Box, Grid2 } from "@mui/material";
-import Header from "../components/mainlayout/Header/Header";
+import MainLayout from "../components/mainlayout/MainLayout"; // Use MainLayout
 import ResourcesHero from "../components/common/ResourceHero/ResourceHero";
-import Footer from "../components/mainlayout/Footer/Footer";
 import Book from "../components/common/Book/Book";
 import YouTubeCard from "../components/common/YouTubeCard/YouTubeCard"; // Import YouTubeCard
 import books from "../data/books";
 
 const ResourcesPage = () => {
   return (
-    <Box>
-      {/* Header */}
-      <Header />
-
+    <MainLayout>
       {/* Hero Section */}
       <ResourcesHero />
 
@@ -21,7 +17,7 @@ const ResourcesPage = () => {
         sx={{
           padding: "40px 24px", // Padding around the section
           margin: "24px auto", // Center the section with vertical margins
-          maxWidth: "1200px", // Limit the width for content alignment
+          maxWidth: "1100px", // Limit the width for content alignment
           display: "flex",
           flexDirection: "column", // Arrange content vertically
           alignItems: "center", // Center content horizontally
@@ -100,10 +96,7 @@ const ResourcesPage = () => {
           ))}
         </Grid2>
       </Box>
-
-      {/* Footer */}
-      <Footer />
-    </Box>
+    </MainLayout>
   );
 };
 
