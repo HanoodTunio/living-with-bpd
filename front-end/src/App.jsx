@@ -119,11 +119,23 @@
 // src/App.jsx
 import React from "react";
 import Routing from "./routes/Routing"; // Import the Routing component
+import Loader from "./components/common/Loader/Loader"; // Import the Loader component
+import { useState, useEffect } from "react";
 
 const App = () => {
+  const [loading, setLoading] = useState(true);
+
+  // Simulate loading (e.g., data fetch or setup)
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false); // Set loading to false after 3 seconds
+    }, 3000); // Adjust the time as needed
+  }, []);
+
   return (
     <div>
-      <Routing /> {/* Include the Routing component */}
+      {loading ? <Loader /> : <Routing />}{" "}
+      {/* Show loader if loading is true */}
     </div>
   );
 };
