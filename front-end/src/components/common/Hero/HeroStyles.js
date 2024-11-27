@@ -5,7 +5,7 @@ import heroBackground from "/src/assets/images/hero.png"; // Adjust path if need
 const heroStyles = {
   heroContainer: {
     position: 'relative',
-    height: { xs: '400px', sm: '450px', md: '500px' },
+    height: { xs: '400px', sm: '450px', md: '550px' },
     display: 'flex',
     width: '100%',
     alignItems: 'center',
@@ -33,10 +33,10 @@ const heroStyles = {
     right: '0',
     bottom: '0',
     zIndex: 1,
-    height: { xs: '20%', sm: '20%', md: '25%', lg: '20%' },
+    height: { xs: '25%', sm: '20%', md: '20%', lg: '20%' },
     width: 'auto',
-    maxHeight: '100%',
-    maxWidth: '50%',
+    maxHeight: '90%',
+    maxWidth: '45%',
     objectFit: 'contain',
     opacity: 0.9,
   },

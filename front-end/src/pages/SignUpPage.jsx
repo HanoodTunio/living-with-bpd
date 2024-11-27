@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Box, Typography, Button } from "@mui/material";
+import { Link } from "react-router-dom"; // Import Link for navigation
 import Field from "../components/common/Field/Field"; // Reusable Field Component
 import Circle from "../components/common/Circle/Circle"; // Reusable Circle Component
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
@@ -44,9 +45,10 @@ const SignUpPage = () => {
       <Box
         sx={{
           width: "400px",
-          padding: "32px",
+          padding: "30px",
           borderRadius: "16px",
           textAlign: "center",
+          boxSizing: "border-box",
         }}
       >
         {/* Logo Section */}
@@ -62,16 +64,38 @@ const SignUpPage = () => {
           }}
         />
 
-        {/* Title */}
+        {/* Sign Up Heading */}
         <Typography
           variant="h5"
           sx={{
             fontWeight: "bold",
-            marginBottom: "24px",
+            marginBottom: "16px", // Reduced margin for spacing between heading and the link
             color: "#333",
           }}
         >
           Sign Up
+        </Typography>
+
+        <Typography
+          variant="body2"
+          sx={{
+            color: "rgba(0, 0, 0, 0.6)",
+            marginBottom: "24px", // Added margin to create spacing between the link and form fields
+          }}
+        >
+          Already have an account?{" "}
+          <Link
+            to="/login" // Navigate to Login page
+            style={{
+              color: "#004494", // Blue color for link
+              textDecoration: "underline",
+              fontWeight: "bold",
+              position: "relative", // Ensuring it's above other content
+              zIndex: 1, // Makes sure it's clickable if overlapping elements exist
+            }}
+          >
+            Login
+          </Link>
         </Typography>
 
         {/* Input Fields */}
@@ -80,12 +104,18 @@ const SignUpPage = () => {
           icon={<AccountCircleIcon style={{ color: "white" }} />} // White icon
           value={username}
           onChange={(e) => setUsername(e.target.value)}
+          sx={{
+            marginBottom: "16px", // Consistent margin for all input fields
+          }}
         />
         <Field
           label="Email"
           icon={<EmailIcon style={{ color: "white" }} />} // White icon
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          sx={{
+            marginBottom: "16px", // Consistent margin for all input fields
+          }}
         />
         <Field
           label="Password"
@@ -93,6 +123,9 @@ const SignUpPage = () => {
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          sx={{
+            marginBottom: "16px", // Consistent margin for all input fields
+          }}
         />
 
         {/* Google Sign-In */}

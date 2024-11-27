@@ -1,17 +1,15 @@
-// src/components/BlogCard/BlogCard.jsx
-
 import React from "react";
-import {
-  Card,
-  CardMedia,
-  CardContent,
-  Typography,
-  Box,
-  Link,
-} from "@mui/material";
+import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
+import { Card, CardMedia, CardContent, Typography, Box } from "@mui/material";
 import blogStyles from "./BlogStyles";
 
-const BlogCard = ({ image, title, author, date, description }) => {
+const BlogCard = ({ blogId, image, title, author, date, description }) => {
+  const navigate = useNavigate(); // React Router hook for navigation
+
+  const handleReadMoreClick = () => {
+    navigate(`/blogs/${blogId}`); // Navigate to the detailed blog page with blogId
+  };
+
   return (
     <Card sx={blogStyles.card}>
       <CardMedia
@@ -39,9 +37,20 @@ const BlogCard = ({ image, title, author, date, description }) => {
           {description}
         </Typography>
 
-        <Link href="#" sx={blogStyles.link}>
+        {/* "See Full" Text Link */}
+        <Typography
+          onClick={handleReadMoreClick}
+          variant="body2"
+          sx={{
+            color: "primary.main", // Use theme primary color
+            textDecoration: "underline", // Underline for link-like appearance
+            cursor: "pointer", // Pointer cursor to indicate it's clickable
+            marginTop: "10px", // Spacing from content
+            display: "inline-block", // Inline styling for text
+          }}
+        >
           See full
-        </Link>
+        </Typography>
       </CardContent>
     </Card>
   );
