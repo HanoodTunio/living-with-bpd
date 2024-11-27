@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom"; // Import useLocation for active route detection
 import {
   AppBar,
   Toolbar,
@@ -15,12 +15,20 @@ import {
   MenuItem,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import headerStyles from "./HeaderStyles";
+import headerStyles from "./headerStyles"; // Import the styles
 
 const Header = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
+  const [activeLink, setActiveLink] = useState("Home"); // Default active link
   const navigate = useNavigate();
+  const location = useLocation(); // Get the current location to track active route
+
+  // Update active link based on the current route
+  useEffect(() => {
+    const currentPath = location.pathname.split("/")[1]; // Get path after "/"
+    setActiveLink(currentPath || "Home"); // Set the active link based on the current route
+  }, [location]);
 
   // Sign Up Button Handler
   const handleSignUp = () => {
@@ -92,9 +100,14 @@ const Header = () => {
                 key={index}
                 color="inherit"
                 sx={
-                  link === "Home" ? headerStyles.activeLink : headerStyles.link
+                  activeLink.toLowerCase() === link.toLowerCase()
+                    ? headerStyles.activeLink
+                    : headerStyles.link
                 }
-                onClick={() => navigate(`/${link.toLowerCase()}`)}
+                onClick={() => {
+                  setActiveLink(link); // Set the clicked link as active
+                  navigate(`/${link.toLowerCase()}`);
+                }}
               >
                 {link}
               </Button>
@@ -146,7 +159,10 @@ const Header = () => {
               <ListItem
                 button
                 key={index}
-                onClick={() => navigate(`/${link.toLowerCase()}`)}
+                onClick={() => {
+                  setActiveLink(link); // Set the clicked link as active in the drawer
+                  navigate(`/${link.toLowerCase()}`);
+                }}
               >
                 <ListItemText primary={link} />
               </ListItem>

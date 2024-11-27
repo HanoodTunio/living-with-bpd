@@ -30,8 +30,9 @@ const headerStyles = {
     alignItems: 'right',
   },
   activeLink: {
-    color: '#00A86B',
+    color: '#00A86B',  // Green color for active link
     fontWeight: 'bold',
+    textDecoration: 'underline', // Optional: Add underline for active link
   },
   link: {
     color: 'inherit',
