@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Box, Typography, Button } from "@mui/material";
-import { Link } from "react-router-dom"; // Import Link for navigation
+import { Link, useNavigate } from "react-router-dom"; // Import Link and useNavigate
 import Field from "../components/common/Field/Field"; // Reusable Field Component
 import Circle from "../components/common/Circle/Circle"; // Reusable Circle Component
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
@@ -9,9 +9,14 @@ import LockIcon from "@mui/icons-material/Lock";
 const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate(); // Use navigate hook to navigate programmatically
 
   const handleLogin = () => {
-    console.log({ username, password });
+    if (!username || !password) {
+      alert("Please enter both username and password.");
+    } else {
+      navigate("/user-dashboard");
+    }
   };
 
   return (
@@ -34,8 +39,6 @@ const LoginPage = () => {
       <Circle size={170} top="2%" left="72%" />
       <Circle size={150} top="50%" left="30%" />
       <Circle size={200} top="80%" left="80%" />
-
-      {/* Additional Circles */}
       <Circle size={100} top="20%" left="80%" />
       <Circle size={250} top="60%" left="10%" />
       <Circle size={180} top="30%" left="50%" />
@@ -136,7 +139,7 @@ const LoginPage = () => {
               background: "linear-gradient(90deg, #0057B7, #00A86B)", // Slightly darker gradient
             },
           }}
-          onClick={handleLogin}
+          onClick={handleLogin} // Trigger login function on button click
         >
           Sign In
         </Button>

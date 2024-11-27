@@ -10,6 +10,7 @@ import ResourcePage from "../pages/ResourcesPage";
 import BlogDetail from "../pages/BlogDetailPage";
 import SignUpPage from "../pages/SignUpPage";
 import ForgotPasswordPage from "../pages/ForgotPasswordPage";
+import UserDashboardPage from "../pages/UserDashboardPage";
 
 const Routing = () => {
   return (
@@ -18,6 +19,7 @@ const Routing = () => {
       <Route path="/" element={<LandingPage />} />
       <Route path="/home" element={<LandingPage />} />
       <Route path="/login" element={<LoginPage />} />
+      <Route path="/user-dashboard" element={<UserDashboardPage />} />
       <Route path="signup" element={<SignUpPage />} />
       <Route path="/forgot-password" element={<ForgotPasswordPage />} />
       <Route path="/gallery" element={<GalleryPage />} />

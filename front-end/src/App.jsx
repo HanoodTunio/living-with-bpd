@@ -80,65 +80,27 @@
 // //   );
 // // };
 
-// // export default App;
-
 import React from "react";
-import { Box } from "@mui/material";
-import backgroundImage from "./assets/images/backgroundColor.jpg"; // Background image
-import ResourcesPage from "./pages/ResourcesPage";
-import GalleryPage from "./pages/GalleryPage";
-import LoginPage from "./pages/LoginPage";
-import ForgotPasswordPage from "./pages/ForgotPasswordPage";
-import SignUpPage from "./pages/SignUpPage";
-import CreateBlogPage from "./pages/CreateBlogPage";
-import CreateEventPage from "./pages/CreateEventPage";
-import UserHeader from "./components/mainlayout/UserHeader/UserHeader";
-import ExerciseCard from "./components/common/ExerciseCard/ExerciseCard";
+import Routing from "./routes/Routing"; // Import the Routing component
+import Loader from "./components/common/Loader/Loader"; // Import the Loader component
+import { useState, useEffect } from "react";
 
 const App = () => {
+  const [loading, setLoading] = useState(true);
+
+  // Simulate loading (e.g., data fetch or setup)
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false); // Set loading to false after 3 seconds
+    }, 3000); // Adjust the time as needed
+  }, []);
+
   return (
-    <Box
-      sx={{
-        minHeight: "120vh",
-        backgroundImage: `url(${backgroundImage})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        display: "flex",
-        justifyContent: "center", // Center the Book component
-        alignItems: "flex",
-        padding: "16px",
-      }}
-    >
-      <UserHeader />
-    </Box>
+    <div>
+      {loading ? <Loader /> : <Routing />}{" "}
+      {/* Show loader if loading is true */}
+    </div>
   );
 };
 
 export default App;
-
-// src/App.jsx
-// import React from "react";
-// import Routing from "./routes/Routing"; // Import the Routing component
-// import Loader from "./components/common/Loader/Loader"; // Import the Loader component
-// import { useState, useEffect } from "react";
-
-// const App = () => {
-//   const [loading, setLoading] = useState(true);
-
-//   // Simulate loading (e.g., data fetch or setup)
-//   useEffect(() => {
-//     setTimeout(() => {
-//       setLoading(false); // Set loading to false after 3 seconds
-//     }, 3000); // Adjust the time as needed
-//   }, []);
-
-//   return (
-//     <div>
-//       {loading ? <Loader /> : <Routing />}{" "}
-//       {/* Show loader if loading is true */}
-//     </div>
-//   );
-// };
-
-// export default App;
