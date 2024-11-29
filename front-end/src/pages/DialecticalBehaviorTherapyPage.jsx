@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Typography, Link, Grid2, Paper } from "@mui/material";
+import { Box, Typography, Link, Grid, Paper } from "@mui/material";
 import UserHeader from "../components/mainlayout/UserHeader/UserHeader";
 import effective from "../assets/images/effective.png";
 import emotions from "../assets/images/emotions.png";
@@ -42,24 +42,21 @@ const DialecticalBehaviorTherapyPage = () => {
     <Box
       sx={{
         width: "100%",
-        height: "100vh", // Ensure full viewport height
-        overflow: "hidden", // Hide overflow at the root level
+        minHeight: "100vh", // Ensure the page takes at least the full height of the viewport
         display: "flex",
         flexDirection: "column", // Stack items vertically
-        justifyContent: "flex-start", // Align top to prevent content from overflowing
-        alignItems: "center", // Center horizontally
         background: "none", // Remove background from Box
+        overflowY: "auto", // Allow scrolling for the outer container
+        justifyContent: "center", // Center content vertically
+        alignItems: "center", // Center content horizontally
       }}
     >
       {/* Header Section */}
       <Box
         sx={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          width: "100%",
-          zIndex: 10,
-          height: "80px", // Explicit height for fixed header
+          height: "80px", // Set header height
+          padding: "20px", // Optional, if you want some padding
+          width: "100%", // Ensure the header spans the full width
         }}
       >
         <UserHeader />
@@ -68,34 +65,37 @@ const DialecticalBehaviorTherapyPage = () => {
       {/* Main Content Section */}
       <Box
         sx={{
-          marginTop: "80px", // Ensure content doesn't overlap with the header
           width: "100%",
-          maxWidth: "lg",
-          overflowY: "hidden", // Allow vertical scrolling within this area if needed
+          maxWidth: "lg", // Set max width for the content section to avoid stretching
           padding: "20px",
           boxSizing: "border-box", // Include padding in width/height calculations
+          flex: 1, // Allow the content section to expand and fill the remaining height
+          overflowY: "auto", // Ensure content can scroll if it overflows
         }}
       >
-        <Grid2
+        <Grid
           container
           spacing={6}
-          justifyContent="center"
-          marginTop={"25px"}
-          sx={{ overflow: "hidden" }}
+          justifyContent="center" // Horizontally center the cards
+          sx={{
+            padding: "0 10px", // Small padding to prevent overflow
+            overflowX: "hidden", // Prevent horizontal overflow
+          }}
         >
           {cardsData.map((card, index) => (
-            <Grid2 key={index} item xs={12} sm={6} md={6}>
+            <Grid key={index} item xs={12} sm={6}>
               <Paper
                 sx={{
                   display: "flex",
                   flexDirection: "row",
                   borderRadius: "8px",
                   boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
-                  overflow: "hidden",
+                  overflow: "hidden", // Prevent overflow within cards
                   backgroundColor: "transparent", // Keep card background intact
                   width: "100%", // Ensure the card doesn't stretch beyond the container
                   maxWidth: "450px", // Set max width of each card
-                  height: "auto", // Remove fixed height to adjust for text overflow
+                  height: "auto", // Allow dynamic height based on content
+                  margin: "0 auto", // Center each card inside the grid item
                 }}
               >
                 {/* Image Column */}
@@ -112,7 +112,7 @@ const DialecticalBehaviorTherapyPage = () => {
                     style={{
                       width: "100%",
                       height: "100%",
-                      objectFit: "cover", // Make sure image covers the area without distortion
+                      objectFit: "cover", // Ensure the image covers the area without distortion
                     }}
                   />
                 </Box>
@@ -152,7 +152,7 @@ const DialecticalBehaviorTherapyPage = () => {
                     sx={{
                       display: "inline-block",
                       padding: "12px",
-                      color: "#007BFF", // Link color (adjust as needed)
+                      color: "#007BFF", // Link color
                       textDecoration: "none", // Remove underline if you don't want it
                       fontWeight: "bold",
                       "&:hover": {
@@ -165,9 +165,9 @@ const DialecticalBehaviorTherapyPage = () => {
                   </Link>
                 </Box>
               </Paper>
-            </Grid2>
+            </Grid>
           ))}
-        </Grid2>
+        </Grid>
       </Box>
     </Box>
   );
