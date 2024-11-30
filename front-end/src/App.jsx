@@ -23,28 +23,29 @@
 
 // // export default App;
 
-import React from "react";
-import { Box } from "@mui/material"; // Import Material-UI components
-import DialecticalBehaviorTherapyPage from "./pages/DialecticalBehaviorTherapyPage"; // Import the page
-import ExercisesPage from "./pages/ExcercisesPage";
-import backgroundImage from "./assets/images/backgroundColor.jpg"; // Path to your background image
+// import React from "react";
+// import { Box } from "@mui/material"; // Import Material-UI components
+// import DialecticalBehaviorTherapyPage from "./pages/DialecticalBehaviorTherapyPage"; // Import the page
+// import ExercisesPage from "./pages/ExcercisesPage";
+// import backgroundImage from "./assets/images/backgroundColor.jpg"; // Path to your background image
+// import CardField from "./components/common/DynamicCardSection/CardFields";
 
-const App = () => {
-  return (
-    <Box
-      sx={{
-        minHeight: "100vh", // Ensure the background image covers the entire viewport height
-        backgroundImage: `url(${backgroundImage})`, // Apply the background image
-        backgroundSize: "cover", // Make the background cover the entire page
-        backgroundPosition: "center", // Center the background image
-        backgroundRepeat: "no-repeat", // Avoid repeating the background image
-      }}
-    >
-      <ExercisesPage /> {/* Render the page directly */}
-    </Box>
-  );
-};
-export default App;
+// const App = () => {
+//   return (
+//     <Box
+//       sx={{
+//         minHeight: "100vh", // Ensure the background image covers the entire viewport height
+//         backgroundImage: `url(${backgroundImage})`, // Apply the background image
+//         backgroundSize: "cover", // Make the background cover the entire page
+//         backgroundPosition: "center", // Center the background image
+//         backgroundRepeat: "no-repeat", // Avoid repeating the background image
+//       }}
+//     >
+//       <CardField /> {/* Render the page directly */}
+//     </Box>
+//   );
+// };
+// export default App;
 
 // import React from "react";
 // import { Container, Box, Typography } from "@mui/material";
@@ -86,3 +87,48 @@ export default App;
 // };
 
 // export default App;
+
+import React from "react";
+import DynamicSection from "./components/common/WorksheetBoard/DynamicSection"; // Importing the DynamicSection component
+
+const App = () => {
+  // Dynamic fields data for Section 1 (fields without buttons)
+  const dynamicFieldsData = [
+    { label: "First Name" },
+    { label: "Last Name" },
+    { label: "Email" },
+  ];
+
+  // Dynamic buttons and fields for Section 2
+  const buttonFieldsData = {
+    "Button 1": [{ label: "Address" }, { label: "City" }],
+    "Button 2": [{ label: "Phone Number" }, { label: "Country" }],
+  };
+
+  const handleSave = (formData) => {
+    console.log("Saved Data: ", formData);
+    // You can send this data to an API or process it further
+  };
+
+  return (
+    <div>
+      {/* Section 1 with Dynamic Fields (no buttons) */}
+      <DynamicSection
+        title="Section 1"
+        dynamicFieldsData={dynamicFieldsData} // Passing fields data
+        isButtonSection={false} // This section doesn't have buttons, only fields
+        onSave={handleSave} // Save function to handle form data
+      />
+
+      {/* Section 2 with Dynamic Buttons and Fields */}
+      <DynamicSection
+        title="Section 2"
+        dynamicFieldsData={buttonFieldsData} // Passing button-based fields data
+        isButtonSection={true} // This section has buttons to show fields
+        onSave={handleSave} // Save function to handle form data
+      />
+    </div>
+  );
+};
+
+export default App;
