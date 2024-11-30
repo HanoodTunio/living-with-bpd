@@ -88,47 +88,128 @@
 
 // export default App;
 
+// import React from "react";
+// import DynamicSection from "./components/common/WorksheetBoard/DynamicSection"; // Importing the DynamicSection component
+
+// const App = () => {
+//   // Dynamic fields data for Section 1 (fields without buttons)
+//   const dynamicFieldsData = [
+//     { label: "First Name" },
+//     { label: "Last Name" },
+//     { label: "Email" },
+//   ];
+
+//   // Dynamic buttons and fields for Section 2
+//   const buttonFieldsData = {
+//     "Button 1": [{ label: "Address" }, { label: "City" }],
+//     "Button 2": [{ label: "Phone Number" }, { label: "Country" }],
+//   };
+
+//   const handleSave = (formData) => {
+//     console.log("Saved Data: ", formData);
+//     // You can send this data to an API or process it further
+//   };
+
+//   return (
+//     <div>
+//       {/* Section 1 with Dynamic Fields (no buttons) */}
+//       <DynamicSection
+//         title="Section 1"
+//         dynamicFieldsData={dynamicFieldsData} // Passing fields data
+//         isButtonSection={false} // This section doesn't have buttons, only fields
+//         onSave={handleSave} // Save function to handle form data
+//       />
+
+//       {/* Section 2 with Dynamic Buttons and Fields */}
+//       <DynamicSection
+//         title="Section 2"
+//         dynamicFieldsData={buttonFieldsData} // Passing button-based fields data
+//         isButtonSection={true} // This section has buttons to show fields
+//         onSave={handleSave} // Save function to handle form data
+//       />
+//     </div>
+//   );
+// };
+
+// export default App;
+
 import React from "react";
-import DynamicSection from "./components/common/WorksheetBoard/DynamicSection"; // Importing the DynamicSection component
+import EmojiSlider from "./components/common/BinaryTracker/EmojiSlider"; // Import your reusable component
 
-const App = () => {
-  // Dynamic fields data for Section 1 (fields without buttons)
-  const dynamicFieldsData = [
-    { label: "First Name" },
-    { label: "Last Name" },
-    { label: "Email" },
-  ];
-
-  // Dynamic buttons and fields for Section 2
-  const buttonFieldsData = {
-    "Button 1": [{ label: "Address" }, { label: "City" }],
-    "Button 2": [{ label: "Phone Number" }, { label: "Country" }],
-  };
-
-  const handleSave = (formData) => {
-    console.log("Saved Data: ", formData);
-    // You can send this data to an API or process it further
-  };
-
+export default function App() {
   return (
     <div>
-      {/* Section 1 with Dynamic Fields (no buttons) */}
-      <DynamicSection
-        title="Section 1"
-        dynamicFieldsData={dynamicFieldsData} // Passing fields data
-        isButtonSection={false} // This section doesn't have buttons, only fields
-        onSave={handleSave} // Save function to handle form data
+      <h1>Rate a Person</h1>
+
+      {/* Kindness Slider */}
+      <EmojiSlider
+        title="Kindness"
+        emojiRanges={[
+          { range: [0, 20], emoji: "😡", color: "#FF6347" },
+          { range: [21, 40], emoji: "😤", color: "#FF4500" },
+          { range: [41, 60], emoji: "😐", color: "#FFCC00" },
+          { range: [61, 80], emoji: "😊", color: "#4CAF50" },
+          { range: [81, 100], emoji: "🥰", color: "#FFD700" },
+        ]}
+        sliderWidth={300}
+        thumbSize={25}
       />
 
-      {/* Section 2 with Dynamic Buttons and Fields */}
-      <DynamicSection
-        title="Section 2"
-        dynamicFieldsData={buttonFieldsData} // Passing button-based fields data
-        isButtonSection={true} // This section has buttons to show fields
-        onSave={handleSave} // Save function to handle form data
+      {/* Anger Slider */}
+      <EmojiSlider
+        title="Anger"
+        emojiRanges={[
+          { range: [0, 20], emoji: "🧘", color: "#00FF00" },
+          { range: [21, 40], emoji: "😐", color: "#FFD700" },
+          { range: [41, 60], emoji: "😤", color: "#FF6347" },
+          { range: [61, 80], emoji: "😡", color: "#FF4500" },
+          { range: [81, 100], emoji: "💢", color: "#FF0000" },
+        ]}
+        sliderWidth={300}
+        thumbSize={25}
+      />
+
+      {/* Helpfulness Slider */}
+      <EmojiSlider
+        title="Helpfulness"
+        emojiRanges={[
+          { range: [0, 20], emoji: "🙅", color: "#FF6347" },
+          { range: [21, 40], emoji: "😐", color: "#FFD700" },
+          { range: [41, 60], emoji: "🤝", color: "#0000FF" },
+          { range: [61, 80], emoji: "👍", color: "#4CAF50" },
+          { range: [81, 100], emoji: "💪", color: "#00FF00" },
+        ]}
+        sliderWidth={300}
+        thumbSize={25}
+      />
+
+      {/* Trustworthiness Slider */}
+      <EmojiSlider
+        title="Trustworthiness"
+        emojiRanges={[
+          { range: [0, 20], emoji: "👀", color: "#FF6347" },
+          { range: [21, 40], emoji: "🙄", color: "#FF4500" },
+          { range: [41, 60], emoji: "😐", color: "#FFD700" },
+          { range: [61, 80], emoji: "💎", color: "#4CAF50" },
+          { range: [81, 100], emoji: "🔒", color: "#00BFFF" },
+        ]}
+        sliderWidth={300}
+        thumbSize={25}
+      />
+
+      {/* Understanding Slider */}
+      <EmojiSlider
+        title="Understanding"
+        emojiRanges={[
+          { range: [0, 20], emoji: "🤔", color: "#FF6347" },
+          { range: [21, 40], emoji: "😐", color: "#FFD700" },
+          { range: [41, 60], emoji: "🙋", color: "#4CAF50" },
+          { range: [61, 80], emoji: "🧠", color: "#00BFFF" },
+          { range: [81, 100], emoji: "💡", color: "#FFD700" },
+        ]}
+        sliderWidth={300}
+        thumbSize={25}
       />
     </div>
   );
-};
-
-export default App;
+}
