@@ -1,8 +1,7 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
-import heroImage from "../../../assets/images/ExHero.png"; // Replace with your actual image path
 
-const ExHero = () => {
+const ExHero = ({ heroImage, heading, subHeading, description }) => {
   return (
     <Box
       sx={{
@@ -25,7 +24,7 @@ const ExHero = () => {
       >
         <img
           src={heroImage}
-          alt="Mindfulness Illustration"
+          alt={heading}
           style={{
             maxWidth: "90%",
             height: "auto",
@@ -51,7 +50,7 @@ const ExHero = () => {
             marginBottom: "16px",
           }}
         >
-          DBT Mindfulness
+          {heading}
         </Typography>
 
         <Typography
@@ -63,7 +62,7 @@ const ExHero = () => {
             marginBottom: "16px",
           }}
         >
-          Exercises and Worksheets
+          {subHeading}
         </Typography>
 
         <Typography
@@ -75,10 +74,7 @@ const ExHero = () => {
             color: "#464343",
           }}
         >
-          Mindfulness is the foundation skill for DBT. These 10 exercises teach
-          you to observe your thoughts and feelings non-judgmentally, setting
-          the stage for <strong>emotion regulation, distress tolerance,</strong>{" "}
-          and <strong>interpersonal effectiveness.</strong>
+          {description}
         </Typography>
       </Box>
     </Box>
