@@ -19,7 +19,7 @@ import DeleteIcon from "@mui/icons-material/Delete"; // Import the Delete icon
 
 const BinaryTrackerPage = () => {
   const [username, setUsername] = useState("");
-  const [sliderValues, setSliderValues] = useState([50, 40, 60, 45]); // Removed the 5th slider (Work Ethic)
+  const [sliderValues, setSliderValues] = useState([50, 40, 60, 45, 55]); // Adjusted for 5 sliders
   const [userData, setUserData] = useState([]);
   const [isUserAdding, setIsUserAdding] = useState(false);
   const [openModal, setOpenModal] = useState(false);
@@ -27,13 +27,24 @@ const BinaryTrackerPage = () => {
   const [feedbackProvided, setFeedbackProvided] = useState(false);
   const [showTable, setShowTable] = useState(false); // To toggle table visibility
 
-  // Calculate the average of slider values
-  const calculateAverage = (values) => {
-    const sum = values.reduce((acc, value) => acc + value, 0);
-    return (sum / values.length).toFixed(2);
+  const getEmojiForValue = (traitIndex, value) => {
+    const ranges = emojiRanges[traitIndex]; // Emoji ranges based on trait
+    for (let i = 0; i < ranges.length; i++) {
+      const { range, emoji } = ranges[i];
+      if (value >= range[0] && value <= range[1]) {
+        return emoji;
+      }
+    }
+    return "😐"; // Default emoji if no range matched
   };
 
-  // Handle slider value change
+  // Calculate the average of slider values as a percentage
+  const calculateAverage = (values) => {
+    const sum = values.reduce((acc, value) => acc + value, 0);
+    const avg = (sum / values.length).toFixed(2);
+    return `${avg}%`; // Return percentage format
+  };
+
   const handleSliderChange = (index, newValue) => {
     setSliderValues((prevValues) => {
       const updatedValues = [...prevValues];
@@ -42,45 +53,40 @@ const BinaryTrackerPage = () => {
     });
   };
 
-  // Handle username input change
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
   };
 
-  // Add user and reset form
   const handleAddUser = () => {
     if (username.trim() !== "") {
       const newUser = { username, traits: sliderValues };
       setUserData((prevData) => [...prevData, newUser]);
       setUsername("");
-      setSliderValues([50, 40, 60, 45]); // Reset the sliders
+      setSliderValues([50, 40, 60, 45, 55]); // Reset sliders
       setIsUserAdding(false);
 
       // Calculate the average before opening modal
       const avg = calculateAverage(sliderValues);
       setModalAverage(avg); // Set the calculated average for the modal
 
-      setFeedbackProvided(true); // Mark feedback as provided
-      setOpenModal(true); // Open modal immediately
+      setFeedbackProvided(true);
+      setOpenModal(true);
     } else {
       alert("Please enter a valid username.");
     }
   };
 
-  // Close the modal
   const handleCloseModal = () => {
     setOpenModal(false);
     setFeedbackProvided(false); // Reset feedback state when closing modal
   };
 
-  // Delete user function
   const handleDeleteUser = (usernameToDelete) => {
     setUserData((prevData) =>
       prevData.filter((user) => user.username !== usernameToDelete)
     );
   };
 
-  // Define modal style
   const modalStyle = {
     position: "absolute",
     top: "50%",
@@ -94,28 +100,25 @@ const BinaryTrackerPage = () => {
     zIndex: 1300,
   };
 
-  // Toggle table visibility on "Tracker Record" click
   const handleTrackerRecordClick = () => {
     setShowTable(true);
-    setIsUserAdding(false); // Hide the form when showing the table
+    setIsUserAdding(false);
   };
 
-  // Back button functionality
   const handleBackButton = () => {
-    setIsUserAdding(false); // Reset state to show the initial buttons
-    setUsername(""); // Reset form data
-    setSliderValues([50, 40, 60, 45]); // Reset slider values
-    setShowTable(false); // Close the table if it's open
+    setIsUserAdding(false);
+    setUsername("");
+    setSliderValues([50, 40, 60, 45, 55]); // Reset slider values
+    setShowTable(false);
   };
 
-  // Handle "Add User" from the table to show the user form
   const handleAddUserFromTable = () => {
-    setShowTable(false); // Hide the table
-    setIsUserAdding(true); // Show the user tracker form
+    setShowTable(false);
+    setIsUserAdding(true);
   };
 
   return (
-    <Box sx={{ padding: "20px", maxWidth: "900px", margin: "0 auto" }}>
+    <Box sx={{ padding: "20px", maxWidth: "1200px", margin: "0 auto" }}>
       <Typography
         variant="h4"
         sx={{ marginBottom: "20px", textAlign: "center" }}
@@ -124,49 +127,41 @@ const BinaryTrackerPage = () => {
       </Typography>
 
       <Box sx={{ marginBottom: "20px", textAlign: "center" }}>
-        {/* Always show buttons at the top */}
         <Box
           sx={{
             display: "flex",
             justifyContent: "flex-end",
             gap: "12px",
-            marginBottom: "20px", // To give space between buttons and form/table
+            marginBottom: "20px",
           }}
         >
           {!showTable && (
             <>
               <CustomButton
                 text="Add User"
-                onClick={() => setIsUserAdding(true)} // Show form when adding user
+                onClick={() => setIsUserAdding(true)}
               />
               <CustomButton
                 text="Tracker Record"
-                onClick={handleTrackerRecordClick} // Show table when viewing record
+                onClick={handleTrackerRecordClick}
               />
             </>
           )}
           {showTable && (
             <>
-              <CustomButton
-                text="Back"
-                onClick={handleBackButton} // Show back button to go back
-              />
-              <CustomButton
-                text="Add User"
-                onClick={handleAddUserFromTable} // Add user from table to form
-              />
+              <CustomButton text="Back" onClick={handleBackButton} />
+              <CustomButton text="Add User" onClick={handleAddUserFromTable} />
             </>
           )}
         </Box>
 
         {isUserAdding && !showTable ? (
           <>
-            {/* User form */}
             <Box
               sx={{
                 marginTop: "50px",
-                marginBottom: "30px",
-                width: "60%",
+                marginBottom: "50px",
+                width: "50%",
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
@@ -183,76 +178,20 @@ const BinaryTrackerPage = () => {
             </Box>
 
             <Box sx={{ marginBottom: "30px" }}>
-              <EmojiSlider
-                title="Kindness"
-                value={sliderValues[0]}
-                onValueChange={(newValue) => handleSliderChange(0, newValue)}
-                emojiRanges={[
-                  { range: [0, 20], emoji: "😡", color: "#FF6347" },
-                  { range: [21, 40], emoji: "😤", color: "#FF4500" },
-                  { range: [41, 60], emoji: "😐", color: "#FFCC00" },
-                  { range: [61, 80], emoji: "😊", color: "#4CAF50" },
-                  { range: [81, 100], emoji: "🥰", color: "#FFD700" },
-                ]}
-                sliderWidth={300}
-                thumbSize={25}
-              />
-              <EmojiSlider
-                title="Anger"
-                value={sliderValues[1]}
-                onValueChange={(newValue) => handleSliderChange(1, newValue)}
-                emojiRanges={[
-                  { range: [0, 20], emoji: "🧘", color: "#00FF00" },
-                  { range: [21, 40], emoji: "😐", color: "#FFD700" },
-                  { range: [41, 60], emoji: "😤", color: "#FF6347" },
-                  { range: [61, 80], emoji: "😡", color: "#FF4500" },
-                  { range: [81, 100], emoji: "💢", color: "#FF0000" },
-                ]}
-                sliderWidth={300}
-                thumbSize={25}
-              />
-              <EmojiSlider
-                title="Helpfulness"
-                value={sliderValues[2]}
-                onValueChange={(newValue) => handleSliderChange(2, newValue)}
-                emojiRanges={[
-                  { range: [0, 20], emoji: "🙅", color: "#FF6347" },
-                  { range: [21, 40], emoji: "😐", color: "#FFD700" },
-                  { range: [41, 60], emoji: "🤝", color: "#0000FF" },
-                  { range: [61, 80], emoji: "👍", color: "#4CAF50" },
-                  { range: [81, 100], emoji: "💪", color: "#00FF00" },
-                ]}
-                sliderWidth={300}
-                thumbSize={25}
-              />
-              <EmojiSlider
-                title="Trustworthiness"
-                value={sliderValues[3]}
-                onValueChange={(newValue) => handleSliderChange(3, newValue)}
-                emojiRanges={[
-                  { range: [0, 20], emoji: "👀", color: "#FF6347" },
-                  { range: [21, 40], emoji: "🙄", color: "#FF4500" },
-                  { range: [41, 60], emoji: "😐", color: "#FFD700" },
-                  { range: [61, 80], emoji: "💎", color: "#4CAF50" },
-                  { range: [81, 100], emoji: "💖", color: "#00BFFF" },
-                ]}
-                sliderWidth={300}
-                thumbSize={25}
-              />
-              <EmojiSlider
-                title="Understanding"
-                value={sliderValues[4]}
-                onValueChange={(newValue) => handleSliderChange(4, newValue)} // Handling slider value change
-                emojiRanges={[
-                  { range: [0, 20], emoji: "🤔", color: "#FF6347" },
-                  { range: [21, 40], emoji: "😐", color: "#FFD700" },
-                  { range: [41, 60], emoji: "🙋", color: "#4CAF50" },
-                  { range: [61, 80], emoji: "🧠", color: "#00BFFF" },
-                  { range: [81, 100], emoji: "💡", color: "#FFD700" },
-                ]}
-                sliderWidth={300}
-                thumbSize={25}
-              />
+              {/* Render EmojiSliders for traits */}
+              {emojiSliders.map((slider, index) => (
+                <EmojiSlider
+                  key={slider.title}
+                  title={slider.title}
+                  value={sliderValues[index]}
+                  onValueChange={(newValue) =>
+                    handleSliderChange(index, newValue)
+                  }
+                  emojiRanges={slider.emojiRanges}
+                  sliderWidth={300}
+                  thumbSize={25}
+                />
+              ))}
             </Box>
 
             <Box
@@ -264,8 +203,7 @@ const BinaryTrackerPage = () => {
           </>
         ) : showTable ? (
           <>
-            {/* Render the table */}
-            <TableContainer component={Paper}>
+            <TableContainer component={Paper} sx={{ width: "100%" }}>
               <Table>
                 <TableHead>
                   <TableRow>
@@ -274,39 +212,41 @@ const BinaryTrackerPage = () => {
                     <TableCell>Anger</TableCell>
                     <TableCell>Helpfulness</TableCell>
                     <TableCell>Trustworthiness</TableCell>
+                    <TableCell>Understanding</TableCell>
                     <TableCell>Average</TableCell>
                     <TableCell>Action</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {userData.map((user, index) => (
-                    <TableRow key={index}>
-                      <TableCell>{user.username}</TableCell>
-                      <TableCell>{user.traits[0]}</TableCell>
-                      <TableCell>{user.traits[1]}</TableCell>
-                      <TableCell>{user.traits[2]}</TableCell>
-                      <TableCell>{user.traits[3]}</TableCell>
-                      <TableCell>{calculateAverage(user.traits)}</TableCell>
-                      <TableCell>
-                        <IconButton
-                          color="error"
-                          onClick={() => handleDeleteUser(user.username)}
-                        >
-                          <DeleteIcon />
-                        </IconButton>
-                      </TableCell>
-                    </TableRow>
-                  ))}
+                  {userData.map((user) => {
+                    const average = calculateAverage(user.traits);
+                    return (
+                      <TableRow key={user.username}>
+                        <TableCell>{user.username}</TableCell>
+                        {user.traits.map((trait, index) => (
+                          <TableCell align="center" key={index}>
+                            {getEmojiForValue(index, trait)}
+                          </TableCell>
+                        ))}
+                        <TableCell align="center">{average}</TableCell>
+                        <TableCell align="center">
+                          <IconButton
+                            color="secondary"
+                            onClick={() => handleDeleteUser(user.username)}
+                          >
+                            <DeleteIcon />
+                          </IconButton>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
                 </TableBody>
               </Table>
             </TableContainer>
           </>
-        ) : (
-          <></>
-        )}
+        ) : null}
       </Box>
 
-      {/* Modal */}
       <Modal
         open={openModal}
         onClose={handleCloseModal}
@@ -326,5 +266,52 @@ const BinaryTrackerPage = () => {
     </Box>
   );
 };
+
+const emojiRanges = [
+  // Emoji ranges for each trait
+  [
+    { range: [0, 20], emoji: "😡", color: "#FF6347" },
+    { range: [21, 40], emoji: "😤", color: "#FF4500" },
+    { range: [41, 60], emoji: "😐", color: "#FFCC00" },
+    { range: [61, 80], emoji: "😊", color: "#4CAF50" },
+    { range: [81, 100], emoji: "🥰", color: "#FFD700" },
+  ],
+  [
+    { range: [0, 20], emoji: "🧘", color: "#00FF00" },
+    { range: [21, 40], emoji: "😐", color: "#FFD700" },
+    { range: [41, 60], emoji: "😤", color: "#FF6347" },
+    { range: [61, 80], emoji: "😡", color: "#FF4500" },
+    { range: [81, 100], emoji: "💢", color: "#FF0000" },
+  ],
+  [
+    { range: [0, 20], emoji: "🙅", color: "#FF6347" },
+    { range: [21, 40], emoji: "😐", color: "#FFD700" },
+    { range: [41, 60], emoji: "🤝", color: "#0000FF" },
+    { range: [61, 80], emoji: "👍", color: "#4CAF50" },
+    { range: [81, 100], emoji: "💪", color: "#00FF00" },
+  ],
+  [
+    { range: [0, 20], emoji: "👀", color: "#FF6347" },
+    { range: [21, 40], emoji: "🙄", color: "#FF4500" },
+    { range: [41, 60], emoji: "😐", color: "#FFD700" },
+    { range: [61, 80], emoji: "💎", color: "#4CAF50" },
+    { range: [81, 100], emoji: "💖", color: "#00BFFF" },
+  ],
+  [
+    { range: [0, 20], emoji: "🤔", color: "#FF6347" },
+    { range: [21, 40], emoji: "😐", color: "#FFD700" },
+    { range: [41, 60], emoji: "🙋", color: "#4CAF50" },
+    { range: [61, 80], emoji: "🧠", color: "#00BFFF" },
+    { range: [81, 100], emoji: "💡", color: "#FFD700" },
+  ],
+];
+
+const emojiSliders = [
+  { title: "Kindness", emojiRanges: emojiRanges[0] },
+  { title: "Anger", emojiRanges: emojiRanges[1] },
+  { title: "Helpfulness", emojiRanges: emojiRanges[2] },
+  { title: "Trustworthiness", emojiRanges: emojiRanges[3] },
+  { title: "Understanding", emojiRanges: emojiRanges[4] },
+];
 
 export default BinaryTrackerPage;
