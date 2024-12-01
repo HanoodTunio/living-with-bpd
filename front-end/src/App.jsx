@@ -23,29 +23,29 @@
 
 // // export default App;
 
-// import React from "react";
-// import { Box } from "@mui/material"; // Import Material-UI components
-// import DialecticalBehaviorTherapyPage from "./pages/DialecticalBehaviorTherapyPage"; // Import the page
-// import ExercisesPage from "./pages/ExcercisesPage";
-// import backgroundImage from "./assets/images/backgroundColor.jpg"; // Path to your background image
-// import CardField from "./components/common/DynamicCardSection/CardFields";
+import React from "react";
+import { Box } from "@mui/material"; // Import Material-UI components
+import DialecticalBehaviorTherapyPage from "./pages/DialecticalBehaviorTherapyPage"; // Import the page
+import ExercisesPage from "./pages/ExcercisesPage";
+import backgroundImage from "./assets/images/backgroundColor.jpg"; // Path to your background image
+import BinaryTrackerPage from "./pages/BinaryTrakerPage";
 
-// const App = () => {
-//   return (
-//     <Box
-//       sx={{
-//         minHeight: "100vh", // Ensure the background image covers the entire viewport height
-//         backgroundImage: `url(${backgroundImage})`, // Apply the background image
-//         backgroundSize: "cover", // Make the background cover the entire page
-//         backgroundPosition: "center", // Center the background image
-//         backgroundRepeat: "no-repeat", // Avoid repeating the background image
-//       }}
-//     >
-//       <CardField /> {/* Render the page directly */}
-//     </Box>
-//   );
-// };
-// export default App;
+const App = () => {
+  return (
+    <Box
+      sx={{
+        minHeight: "100vh", // Ensure the background image covers the entire viewport height
+        backgroundImage: `url(${backgroundImage})`, // Apply the background image
+        backgroundSize: "cover", // Make the background cover the entire page
+        backgroundPosition: "center", // Center the background image
+        backgroundRepeat: "no-repeat", // Avoid repeating the background image
+      }}
+    >
+      <BinaryTrackerPage /> {/* Render the page directly */}
+    </Box>
+  );
+};
+export default App;
 
 // import React from "react";
 // import { Container, Box, Typography } from "@mui/material";
@@ -133,83 +133,83 @@
 
 // export default App;
 
-import React from "react";
-import EmojiSlider from "./components/common/BinaryTracker/EmojiSlider"; // Import your reusable component
+// import React from "react";
+// import EmojiSlider from "./components/common/BinaryTracker/EmojiSlider"; // Import your reusable component
 
-export default function App() {
-  return (
-    <div>
-      <h1>Rate a Person</h1>
+// export default function App() {
+//   return (
+//     <div>
+//       <h1>Rate a Person</h1>
 
-      {/* Kindness Slider */}
-      <EmojiSlider
-        title="Kindness"
-        emojiRanges={[
-          { range: [0, 20], emoji: "😡", color: "#FF6347" },
-          { range: [21, 40], emoji: "😤", color: "#FF4500" },
-          { range: [41, 60], emoji: "😐", color: "#FFCC00" },
-          { range: [61, 80], emoji: "😊", color: "#4CAF50" },
-          { range: [81, 100], emoji: "🥰", color: "#FFD700" },
-        ]}
-        sliderWidth={300}
-        thumbSize={25}
-      />
+//       {/* Kindness Slider */}
+//       <EmojiSlider
+//         title="Kindness"
+//         emojiRanges={[
+//           { range: [0, 20], emoji: "😡", color: "#FF6347" },
+//           { range: [21, 40], emoji: "😤", color: "#FF4500" },
+//           { range: [41, 60], emoji: "😐", color: "#FFCC00" },
+//           { range: [61, 80], emoji: "😊", color: "#4CAF50" },
+//           { range: [81, 100], emoji: "🥰", color: "#FFD700" },
+//         ]}
+//         sliderWidth={300}
+//         thumbSize={25}
+//       />
 
-      {/* Anger Slider */}
-      <EmojiSlider
-        title="Anger"
-        emojiRanges={[
-          { range: [0, 20], emoji: "🧘", color: "#00FF00" },
-          { range: [21, 40], emoji: "😐", color: "#FFD700" },
-          { range: [41, 60], emoji: "😤", color: "#FF6347" },
-          { range: [61, 80], emoji: "😡", color: "#FF4500" },
-          { range: [81, 100], emoji: "💢", color: "#FF0000" },
-        ]}
-        sliderWidth={300}
-        thumbSize={25}
-      />
+//       {/* Anger Slider */}
+//       <EmojiSlider
+//         title="Anger"
+//         emojiRanges={[
+//           { range: [0, 20], emoji: "🧘", color: "#00FF00" },
+//           { range: [21, 40], emoji: "😐", color: "#FFD700" },
+//           { range: [41, 60], emoji: "😤", color: "#FF6347" },
+//           { range: [61, 80], emoji: "😡", color: "#FF4500" },
+//           { range: [81, 100], emoji: "💢", color: "#FF0000" },
+//         ]}
+//         sliderWidth={300}
+//         thumbSize={25}
+//       />
 
-      {/* Helpfulness Slider */}
-      <EmojiSlider
-        title="Helpfulness"
-        emojiRanges={[
-          { range: [0, 20], emoji: "🙅", color: "#FF6347" },
-          { range: [21, 40], emoji: "😐", color: "#FFD700" },
-          { range: [41, 60], emoji: "🤝", color: "#0000FF" },
-          { range: [61, 80], emoji: "👍", color: "#4CAF50" },
-          { range: [81, 100], emoji: "💪", color: "#00FF00" },
-        ]}
-        sliderWidth={300}
-        thumbSize={25}
-      />
+//       {/* Helpfulness Slider */}
+//       <EmojiSlider
+//         title="Helpfulness"
+//         emojiRanges={[
+//           { range: [0, 20], emoji: "🙅", color: "#FF6347" },
+//           { range: [21, 40], emoji: "😐", color: "#FFD700" },
+//           { range: [41, 60], emoji: "🤝", color: "#0000FF" },
+//           { range: [61, 80], emoji: "👍", color: "#4CAF50" },
+//           { range: [81, 100], emoji: "💪", color: "#00FF00" },
+//         ]}
+//         sliderWidth={300}
+//         thumbSize={25}
+//       />
 
-      {/* Trustworthiness Slider */}
-      <EmojiSlider
-        title="Trustworthiness"
-        emojiRanges={[
-          { range: [0, 20], emoji: "👀", color: "#FF6347" },
-          { range: [21, 40], emoji: "🙄", color: "#FF4500" },
-          { range: [41, 60], emoji: "😐", color: "#FFD700" },
-          { range: [61, 80], emoji: "💎", color: "#4CAF50" },
-          { range: [81, 100], emoji: "🔒", color: "#00BFFF" },
-        ]}
-        sliderWidth={300}
-        thumbSize={25}
-      />
+//       {/* Trustworthiness Slider */}
+//       <EmojiSlider
+//         title="Trustworthiness"
+//         emojiRanges={[
+//           { range: [0, 20], emoji: "👀", color: "#FF6347" },
+//           { range: [21, 40], emoji: "🙄", color: "#FF4500" },
+//           { range: [41, 60], emoji: "😐", color: "#FFD700" },
+//           { range: [61, 80], emoji: "💎", color: "#4CAF50" },
+//           { range: [81, 100], emoji: "🔒", color: "#00BFFF" },
+//         ]}
+//         sliderWidth={300}
+//         thumbSize={25}
+//       />
 
-      {/* Understanding Slider */}
-      <EmojiSlider
-        title="Understanding"
-        emojiRanges={[
-          { range: [0, 20], emoji: "🤔", color: "#FF6347" },
-          { range: [21, 40], emoji: "😐", color: "#FFD700" },
-          { range: [41, 60], emoji: "🙋", color: "#4CAF50" },
-          { range: [61, 80], emoji: "🧠", color: "#00BFFF" },
-          { range: [81, 100], emoji: "💡", color: "#FFD700" },
-        ]}
-        sliderWidth={300}
-        thumbSize={25}
-      />
-    </div>
-  );
-}
+//       {/* Understanding Slider */}
+//       <EmojiSlider
+//         title="Understanding"
+//         emojiRanges={[
+//           { range: [0, 20], emoji: "🤔", color: "#FF6347" },
+//           { range: [21, 40], emoji: "😐", color: "#FFD700" },
+//           { range: [41, 60], emoji: "🙋", color: "#4CAF50" },
+//           { range: [61, 80], emoji: "🧠", color: "#00BFFF" },
+//           { range: [81, 100], emoji: "💡", color: "#FFD700" },
+//         ]}
+//         sliderWidth={300}
+//         thumbSize={25}
+//       />
+//     </div>
+//   );
+// }

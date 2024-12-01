@@ -11,17 +11,17 @@ const EmojiSlider = ({
     { range: [61, 80], emoji: "💪", color: "#03A9F4" }, // High Helpfulness (Sky Blue)
     { range: [81, 100], emoji: "🥰", color: "#66BB6A" }, // High Kindness (Soft Green)
   ],
+  value, // slider value passed from parent
+  onValueChange, // callback function passed from parent
   sliderWidth = "100%", // Slider width (default to 100% to fill its parent)
   thumbSize = 40, // Thumb size
-  spacing = 25, // Space between elements (slider, emoji, label)
+  spacing = 30, // Space between elements (slider, emoji, label)
 }) => {
   const [mood, setMood] = useState(emojiRanges[2].emoji); // Default emoji is neutral
-  const [value, setValue] = useState(50); // Default slider value
 
   // Handle slider change and update mood
   const handleChange = (e, newValue) => {
-    setValue(newValue);
-
+    onValueChange(newValue); // Pass the new value back to the parent
     // Update mood based on slider value and passed emojiRanges
     const selectedRange = emojiRanges.find(
       (range) => newValue >= range.range[0] && newValue <= range.range[1]
@@ -37,7 +37,7 @@ const EmojiSlider = ({
         justifyContent: "center", // Center everything horizontally
         padding: "5px", // Reduced padding
         borderRadius: "8px",
-        width: "90%", // Ensure the container takes full width of its parent
+        width: "100%", // Ensure the container takes full width of its parent
         marginTop: "20px", // Space at the top
         alignItems: "center", // Vertically center items in the container
         overflowX: "visible", // Make sure nothing overflows
@@ -80,7 +80,7 @@ const EmojiSlider = ({
         }}
       >
         <Slider
-          value={value}
+          value={value} // Get the value from the parent component
           onChange={handleChange}
           aria-labelledby="trait-slider"
           sx={{
