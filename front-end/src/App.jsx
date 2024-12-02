@@ -32,6 +32,7 @@ import BinaryTrackerPage from "./pages/BinaryTrakerPage";
 import UserProfilePage from "./pages/UserProfilePage";
 import AdminCard from "../src/components/common/Admin/AdminCard";
 import AdminCardTwo from "../src/components/common/Admin/AdminCardTwo";
+import Flower from "./components/common/Admin/Flower";
 
 const App = () => {
   return (
@@ -49,6 +50,7 @@ const App = () => {
       }}
     >
       {/* <BinaryTrackerPage /> Render the page directly */}
+      <Flower size={50} petalCount={5} color="#3CAF99" />
       <AdminCardTwo heading={"Card two"} />
     </Box>
   );
