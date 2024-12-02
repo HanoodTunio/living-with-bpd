@@ -30,6 +30,8 @@ import ExercisesPage from "./pages/ExcercisesPage";
 import backgroundImage from "./assets/images/backgroundColor.jpg"; // Path to your background image
 import BinaryTrackerPage from "./pages/BinaryTrakerPage";
 import UserProfilePage from "./pages/UserProfilePage";
+import AdminCard from "../src/components/common/Admin/AdminCard";
+import AdminCardTwo from "../src/components/common/Admin/AdminCardTwo";
 
 const App = () => {
   return (
@@ -47,7 +49,7 @@ const App = () => {
       }}
     >
       {/* <BinaryTrackerPage /> Render the page directly */}
-      <UserProfilePage />
+      <AdminCardTwo heading={"Card two"} />
     </Box>
   );
 };
