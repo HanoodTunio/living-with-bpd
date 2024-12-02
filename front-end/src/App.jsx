@@ -29,6 +29,7 @@ import DialecticalBehaviorTherapyPage from "./pages/DialecticalBehaviorTherapyPa
 import ExercisesPage from "./pages/ExcercisesPage";
 import backgroundImage from "./assets/images/backgroundColor.jpg"; // Path to your background image
 import BinaryTrackerPage from "./pages/BinaryTrakerPage";
+import UserProfilePage from "./pages/UserProfilePage";
 
 const App = () => {
   return (
@@ -39,9 +40,14 @@ const App = () => {
         backgroundSize: "cover", // Make the background cover the entire page
         backgroundPosition: "center", // Center the background image
         backgroundRepeat: "no-repeat", // Avoid repeating the background image
+        display: "flex", // Flexbox to align content
+        justifyContent: "center", // Horizontally center the content
+        alignItems: "center", // Vertically center the content
+        padding: 2, // Optional: to provide some space around the content
       }}
     >
-      <BinaryTrackerPage /> {/* Render the page directly */}
+      {/* <BinaryTrackerPage /> Render the page directly */}
+      <UserProfilePage />
     </Box>
   );
 };
