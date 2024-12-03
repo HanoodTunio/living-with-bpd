@@ -33,6 +33,7 @@ import UserProfilePage from "./pages/UserProfilePage";
 import AdminCard from "../src/components/common/Admin/AdminCard";
 import AdminCardTwo from "../src/components/common/Admin/AdminCardTwo";
 import Flower from "./components/common/Admin/Flower";
+import AdminPage from "./pages/AdminPage";
 
 const App = () => {
   return (
@@ -45,13 +46,14 @@ const App = () => {
         backgroundRepeat: "no-repeat", // Avoid repeating the background image
         display: "flex", // Flexbox to align content
         justifyContent: "center", // Horizontally center the content
-        alignItems: "center", // Vertically center the content
+        //alignItems: "center", // Vertically center the content
         padding: 2, // Optional: to provide some space around the content
       }}
     >
       {/* <BinaryTrackerPage /> Render the page directly */}
-      <Flower size={50} petalCount={5} color="#3CAF99" />
-      <AdminCardTwo heading={"Card two"} />
+      {/* <Flower size={50} petalCount={5} color="#3CAF99" />
+      <AdminCardTwo heading={"Card two"} /> */}
+      <AdminPage />
     </Box>
   );
 };

@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
 import Circle from "../Circle/Circle"; // Assuming this Circle component is already working
+import Flower from "./Flower";
 
 const AdminCardTwo = ({ heading, onButtonClick }) => {
   return (
@@ -46,22 +47,22 @@ const AdminCardTwo = ({ heading, onButtonClick }) => {
       <Box
         sx={{
           position: "absolute",
-          right: "40px", // Keep the circle within the card on the right
-          top: "50%", // Vertically center the circle
+          right: "10px", // Keep the circle within the card on the right
+          top: "70%", // Vertically center the circle
           transform: "translateY(-50%)", // Correct vertical alignment
           zIndex: 1, // Ensure circle stays below the heading text
           // Responsive adjustments
           "@media (max-width: 600px)": {
             right: "10px", // For small screens, move the circle slightly inward
-            top: "45%", // Adjust vertical positioning for small screens
+            top: "70%", // Adjust vertical positioning for small screens
           },
           "@media (max-width: 900px)": {
-            right: "30px", // Adjust for medium screens
-            top: "50%", // Ensure the circle is still centered on medium screens
+            right: "10px", // Adjust for medium screens
+            top: "65%", // Ensure the circle is still centered on medium screens
           },
         }}
       >
-        <Circle size={50} color="#3CAF99" opacity={0.5} />
+        <Flower size={30} petalCount={5} color="#3CAF99" />
       </Box>
     </Box>
   );
