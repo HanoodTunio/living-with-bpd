@@ -1,7 +1,6 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
-import Circle from "../Circle/Circle"; // Assuming this Circle component is already working
-import Flower from "./Flower";
+import Flower from "./Flower"; // Assuming this Flower component is correctly imported
 
 const AdminCardTwo = ({ heading, onButtonClick }) => {
   return (
@@ -10,14 +9,20 @@ const AdminCardTwo = ({ heading, onButtonClick }) => {
         width: 300, // Wider rectangular card
         height: 80, // Adjusted height to make the card more spacious
         backgroundColor: "transparent",
-        boxShadow: "0 4px 12px rgba(0, 0, 0, 0.4)",
-        position: "relative", // Make sure it's a positioned container
-        borderRadius: "30px", // Less rounded corners for a rectangle
+        boxShadow: "0 4px 12px rgba(0, 0, 0, 0.4)", // Default box shadow
+        position: "relative", // Positioned container for overlay effect
+        borderRadius: "30px", // Rounded corners for a more modern look
         overflow: "hidden", // Prevent content overflow
         cursor: "pointer", // Make the entire card clickable
         display: "flex", // Flexbox for easier layout
         alignItems: "center", // Vertically center the heading
-        paddingLeft: "20px", // Padding to the left to prevent text from touching the edge
+        paddingLeft: "20px", // Padding to prevent text from touching the edge
+        transition: "all 0.3s ease", // Smooth transition for hover effect
+        "&:hover": {
+          backgroundColor: "#f5f5f5", // Light background on hover
+          boxShadow: "0 6px 20px rgba(0, 0, 0, 0.5)", // More intense shadow on hover
+          transform: "scale(1.05)", // Slight scale-up on hover
+        },
       }}
       onClick={onButtonClick} // Make the entire card clickable
     >
@@ -33,32 +38,32 @@ const AdminCardTwo = ({ heading, onButtonClick }) => {
           variant="h6"
           color="textPrimary"
           sx={{
-            fontWeight: "bold", // Apply bold styling
-            fontSize: "18px", // Adjust font size
+            fontWeight: "bold", // Bold heading text
+            fontSize: "18px", // Font size for the heading
             display: "inline-block", // Ensure heading behaves as an inline block
-            zIndex: 2, // Make sure heading stays on top of the circle
+            zIndex: 2, // Ensure heading stays on top of the circle
           }}
         >
           {heading}
         </Typography>
       </Box>
 
-      {/* Circle */}
+      {/* Circle Decoration */}
       <Box
         sx={{
           position: "absolute",
-          right: "10px", // Keep the circle within the card on the right
-          top: "70%", // Vertically center the circle
-          transform: "translateY(-50%)", // Correct vertical alignment
-          zIndex: 1, // Ensure circle stays below the heading text
+          right: "10px", // Circle on the right side
+          top: "70%", // Vertically centered on the card
+          transform: "translateY(-50%)", // Adjust positioning of the circle
+          zIndex: 1, // Ensure circle stays beneath the heading
           // Responsive adjustments
           "@media (max-width: 600px)": {
-            right: "10px", // For small screens, move the circle slightly inward
+            right: "10px", // Slight inward shift on small screens
             top: "70%", // Adjust vertical positioning for small screens
           },
           "@media (max-width: 900px)": {
             right: "10px", // Adjust for medium screens
-            top: "65%", // Ensure the circle is still centered on medium screens
+            top: "65%", // Vertical adjustment for medium screens
           },
         }}
       >
