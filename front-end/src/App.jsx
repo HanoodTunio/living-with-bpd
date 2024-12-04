@@ -34,6 +34,8 @@ import AdminCard from "../src/components/common/Admin/AdminCard";
 import AdminCardTwo from "../src/components/common/Admin/AdminCardTwo";
 import Flower from "./components/common/Admin/Flower";
 import AdminPage from "./pages/AdminPage";
+import TotalBlogsPage from "./pages/TotalBlogsPage";
+import TotalEventsPage from "./pages/TotalEventsPage";
 
 const App = () => {
   return (
@@ -53,6 +55,8 @@ const App = () => {
       {/* <BinaryTrackerPage /> Render the page directly */}
       {/* <Flower size={50} petalCount={5} color="#3CAF99" />
       <AdminCardTwo heading={"Card two"} /> */}
+      {/* <TotalBlogsPage /> */}
+      {/* <TotalEventsPage /> */}
       <AdminPage />
     </Box>
   );

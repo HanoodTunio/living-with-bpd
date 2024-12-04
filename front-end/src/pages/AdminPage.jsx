@@ -2,17 +2,14 @@ import React from "react";
 import { Box, Grid2, Typography, Container } from "@mui/material";
 import AdminCardTwo from "../components/common/Admin/AdminCardTwo"; // Adjust the path if necessary
 import CustomCard from "../components/common/Admin/AdminCard"; // Assuming you have a CustomCard component
-import Flower from "../components/common/Admin/Flower"; // Adjust the import path if needed
+import { useNavigate } from "react-router-dom"; // Import useNavigate for routing
 
 const AdminPage = () => {
-  // Button click handler for AdminCardTwo
-  const handleAdminCardTwoButtonClick = () => {
-    alert("Admin Card Two Button Clicked!");
-  };
+  const navigate = useNavigate(); // Hook to navigate to different pages
 
-  // Button click handler for CustomCard
-  const handleCustomCardButtonClick = () => {
-    alert("Custom Card Button Clicked!");
+  // Button click handler for AdminCardTwo
+  const handleAdminCardTwoButtonClick = (page) => {
+    navigate(page); // Navigate to the specified page
   };
 
   return (
@@ -44,14 +41,18 @@ const AdminPage = () => {
           >
             {/* Custom Card 1 */}
             <CustomCard
-              heading="Custom Card 1"
-              onButtonClick={handleCustomCardButtonClick}
+              heading="Total Blogs"
+              onButtonClick={() =>
+                handleAdminCardTwoButtonClick("/total-blogs")
+              } // Navigate to Total Blogs Page
             />
 
             {/* Custom Card 2 */}
             <CustomCard
-              heading="Custom Card 2"
-              onButtonClick={handleCustomCardButtonClick}
+              heading="Total Events"
+              onButtonClick={() =>
+                handleAdminCardTwoButtonClick("/total-events")
+              } // Navigate to Total Events Page
             />
           </Box>
         </Grid2>
@@ -68,19 +69,19 @@ const AdminPage = () => {
           >
             {/* Admin Card Two 1 */}
             <AdminCardTwo
-              heading="Admin Card Two 1"
+              heading="Create Event"
               onButtonClick={handleAdminCardTwoButtonClick}
             />
 
             {/* Admin Card Two 2 */}
             <AdminCardTwo
-              heading="Admin Card Two 2"
+              heading="Create Blog"
               onButtonClick={handleAdminCardTwoButtonClick}
             />
 
             {/* Admin Card Two 3 */}
             <AdminCardTwo
-              heading="Admin Card Two 3"
+              heading="Number of Users"
               onButtonClick={handleAdminCardTwoButtonClick}
             />
           </Box>
