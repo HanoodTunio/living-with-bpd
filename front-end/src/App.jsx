@@ -36,6 +36,7 @@ import Flower from "./components/common/Admin/Flower";
 import AdminPage from "./pages/AdminPage";
 import TotalBlogsPage from "./pages/TotalBlogsPage";
 import TotalEventsPage from "./pages/TotalEventsPage";
+import SelectWorkSheetPage from "./pages/SelectWorkSheetPage";
 
 const App = () => {
   return (
@@ -57,7 +58,8 @@ const App = () => {
       <AdminCardTwo heading={"Card two"} /> */}
       {/* <TotalBlogsPage /> */}
       {/* <TotalEventsPage /> */}
-      <AdminPage />
+      {/* <AdminPage /> */}
+      <SelectWorkSheetPage />
     </Box>
   );
 };
