@@ -8,26 +8,65 @@ import EventPage from "../pages/EventPage";
 import BlogPage from "../pages/BlogsPage";
 import ResourcePage from "../pages/ResourcesPage";
 import BlogDetail from "../pages/BlogDetailPage";
-import SignUpPage from "../pages/SignUpPage";
-import ForgotPasswordPage from "../pages/ForgotPasswordPage";
-import UserDashboardPage from "../pages/UserDashboardPage";
+import SignUpPage from "../pages/User/SignUpPage";
+import ForgotPasswordPage from "../pages/User/ForgotPasswordPage";
+import UserDashboardPage from "../pages/User/UserDashboardPage";
+import WorksheetPage from "../pages/User/SelectWorkSheetPage";
+import BinaryTrackerPage from "../pages/User/BinaryTrakerPage";
+import SelectExercisesPage from "../pages/User/SelectExercisesPage";
+import UserProfilePage from "../pages/User/UserProfilePage";
+import DialecticalBehaviorTherapyPage from "../pages/User/DialecticalBehaviorTherapyPage";
 
 const Routing = () => {
   return (
     <Routes>
+      {/* Catch-all route for 404 */}
       <Route path="*" element={<NotFoundPage />} />
+
+      {/* Main public routes */}
       <Route path="/" element={<LandingPage />} />
       <Route path="/home" element={<LandingPage />} />
       <Route path="/login" element={<LoginPage />} />
+
+      {/* User Dashboard Routes */}
       <Route path="/user-dashboard" element={<UserDashboardPage />} />
+      <Route path="/user-dashboard/profile" element={<UserProfilePage />} />
+      {/* No Outlet here, we directly render pages */}
+      <Route
+        path="/user-dashboard/start-exercises"
+        element={<DialecticalBehaviorTherapyPage />}
+      />
+      <Route path="/user-dashboard/worksheets" element={<WorksheetPage />} />
+      <Route
+        path="/user-dashboard/binary-tracker"
+        element={<BinaryTrackerPage />}
+      />
+      {/* Select Ex type mindfullness, effective, something something*/}
+
+      <Route
+        path="/user-dashboard/start-exercises/mindfulness"
+        element={<SelectExercisesPage />}
+      />
+      <Route
+        path="/user-dashboard/start-exercises/tolerance"
+        element={<SelectExercisesPage />}
+      />
+      <Route
+        path="/user-dashboard/start-exercises/emotions"
+        element={<SelectExercisesPage />}
+      />
+      <Route
+        path="/user-dashboard/start-exercises/Interpersonal"
+        element={<SelectExercisesPage />}
+      />
+
       <Route path="signup" element={<SignUpPage />} />
       <Route path="/forgot-password" element={<ForgotPasswordPage />} />
       <Route path="/gallery" element={<GalleryPage />} />
       <Route path="/events" element={<EventPage />} />
       <Route path="/resources" element={<ResourcePage />} />
       <Route path="/blogs" element={<BlogPage />} />
-      <Route path="/blogs/:id" element={<BlogDetail />} />
-      {/* Blog detail route */}
+      <Route path="/blogs/:title" element={<BlogDetail />} />
     </Routes>
   );
 };

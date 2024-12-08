@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Box, Typography } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import ProgressBar from "../components/common/ProgressBar/ProgressBar";
-import BlogTitleField from "../components/common/InputWithLabel/InputWithLabel";
-import RichTextEditor from "../components/common/RichTextEditor/RichTextEditor";
-import CustomButton from "../components/common/CustomButton/CustomButton";
-import ImageUploadWithLabel from "../components/common/ImageUploadWithLabel/ImageUploadWithLabel";
+import ProgressBar from "../../components/common/ProgressBar/ProgressBar";
+import BlogTitleField from "../../components/common/InputWithLabel/InputWithLabel";
+import RichTextEditor from "../../components/common/RichTextEditor/RichTextEditor";
+import CustomButton from "../../components/common/CustomButton/CustomButton";
+import ImageUploadWithLabel from "../../components/common/ImageUploadWithLabel/ImageUploadWithLabel";
 
 const CreateEventPage = () => {
   const [activeStep, setActiveStep] = useState(0);

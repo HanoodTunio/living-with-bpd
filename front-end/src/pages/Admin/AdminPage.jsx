@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Grid2, Typography, Container } from "@mui/material";
-import AdminCardTwo from "../components/common/Admin/AdminCardTwo"; // Adjust the path if necessary
-import CustomCard from "../components/common/Admin/AdminCard"; // Assuming you have a CustomCard component
+import AdminCardTwo from "../../components/common/Admin/AdminCardTwo"; // Adjust the path if necessary
+import CustomCard from "../../components/common/Admin/AdminCard"; // Assuming you have a CustomCard component
 import { useNavigate } from "react-router-dom"; // Import useNavigate for routing
 
 const AdminPage = () => {

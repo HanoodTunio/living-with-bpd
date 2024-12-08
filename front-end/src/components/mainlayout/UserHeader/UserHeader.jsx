@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import {
   AppBar,
   Toolbar,
@@ -21,12 +21,11 @@ import UserHeaderStyles from "./UserHeaderStyles"; // Import the styles
 const UserHeader = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
-  const [activeLink, setActiveLink] = useState("Dashboard");
   const navigate = useNavigate();
+  const location = useLocation(); // Get the current location to track active route
 
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 600); // Check if the screen is mobile
 
-  // Navigation Links
   const navLinks = [
     "Dashboard",
     "Mindfulness",
@@ -35,10 +34,11 @@ const UserHeader = () => {
     "Interpersonal",
   ];
 
-  // More Menu Items (Profile Settings)
   const moreMenuItems = [
-    { label: "View Profile", action: () => navigate("/profile") },
-    { label: "Settings", action: () => navigate("/settings") },
+    {
+      label: "View Profile",
+      action: () => navigate("/user-dashboard/profile"),
+    },
     { label: "Logout", action: () => navigate("/logout") },
   ];
 
@@ -65,6 +65,45 @@ const UserHeader = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, [drawerOpen]);
+
+  // Determine the active link based on the current route
+  const currentPath = location.pathname;
+
+  const handleNavigation = (link) => {
+    switch (link) {
+      case "Dashboard":
+        navigate("/user-dashboard");
+        break;
+      case "Mindfulness":
+        navigate("/user-dashboard/start-exercises/mindfulness");
+        break;
+      case "Tolerance":
+        navigate("/user-dashboard/start-exercises/tolerance");
+        break;
+      case "Emotions":
+        navigate("/user-dashboard/start-exercises/emotions");
+        break;
+      case "Interpersonal":
+        navigate("/user-dashboard/start-exercises/interpersonal");
+        break;
+      default:
+        navigate(`/${link.toLowerCase()}`);
+    }
+  };
+
+  const isActiveLink = (link) => {
+    const route = link.toLowerCase();
+
+    if (link === "Dashboard") {
+      return currentPath === "/user-dashboard"; // Exact match for Dashboard
+    }
+
+    if (currentPath.includes(route)) {
+      return true; // For other links, check if the current path includes the link name
+    }
+
+    return false;
+  };
 
   return (
     <AppBar position="static" color="default" sx={UserHeaderStyles.appBar}>
@@ -94,23 +133,26 @@ const UserHeader = () => {
               display: { xs: "none", md: "flex" },
             }}
           >
-            {navLinks.map((link, index) => (
-              <Button
-                key={index}
-                color="inherit"
-                sx={
-                  activeLink === link
-                    ? UserHeaderStyles.activeLink
-                    : UserHeaderStyles.link
-                }
-                onClick={() => {
-                  setActiveLink(link);
-                  navigate(`/${link.toLowerCase()}`);
-                }}
-              >
-                {link}
-              </Button>
-            ))}
+            {navLinks.map((link, index) => {
+              // Check if the current route matches the link
+              const isActive = isActiveLink(link); // Check if current path includes the link name
+              return (
+                <Button
+                  key={index}
+                  color="inherit"
+                  sx={{
+                    ...UserHeaderStyles.link,
+                    color: isActive ? "green" : "inherit", // Active link color (green)
+                    fontWeight: isActive ? "bold" : "normal", // Add bold to active link
+                    textTransform: "none", // To prevent uppercase styling if it exists
+                    fontSize: "18px", // Increased font size
+                  }}
+                  onClick={() => handleNavigation(link)}
+                >
+                  {link}
+                </Button>
+              );
+            })}
           </Box>
         </Box>
 
@@ -120,7 +162,7 @@ const UserHeader = () => {
             color="inherit"
             onClick={handleMoreClick}
             sx={{
-              ...UserHeaderStyles.profileIcon, // Keep the existing profileIcon styles
+              ...UserHeaderStyles.profileIcon,
               display: { xs: "none", md: "inline-flex" }, // Hide on small screens
             }}
           >
@@ -159,19 +201,27 @@ const UserHeader = () => {
         <Drawer anchor="right" open={drawerOpen} onClose={toggleDrawer}>
           <List>
             {/* Mobile Navigation Links */}
-            {navLinks.map((link, index) => (
-              <ListItem
-                button
-                key={index}
-                onClick={() => {
-                  setActiveLink(link);
-                  navigate(`/${link.toLowerCase()}`);
-                  toggleDrawer(); // Close drawer on click
-                }}
-              >
-                <ListItemText primary={link} />
-              </ListItem>
-            ))}
+            {navLinks.map((link, index) => {
+              // Check if the current route matches the link
+              const isActive = isActiveLink(link);
+              return (
+                <ListItem
+                  button
+                  key={index}
+                  onClick={() => {
+                    handleNavigation(link);
+                    toggleDrawer(); // Close drawer on click
+                  }}
+                  sx={{
+                    backgroundColor: isActive ? "green" : "transparent", // Active link background color (green)
+                    color: isActive ? "white" : "inherit", // Change text color for active link
+                    fontWeight: isActive ? "bold" : "normal", // Add bold for active link
+                  }}
+                >
+                  <ListItemText primary={link} />
+                </ListItem>
+              );
+            })}
 
             {/* Mobile Profile Settings */}
             {moreMenuItems.map((item, index) => (
@@ -186,8 +236,6 @@ const UserHeader = () => {
                 <ListItemText primary={item.label} />
               </ListItem>
             ))}
-
-            {/* Removed Logout Button here */}
           </List>
         </Drawer>
       </Toolbar>

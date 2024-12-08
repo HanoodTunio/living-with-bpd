@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Box, Typography, Button } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import Field from "../components/common/Field/Field"; // Reusable Field Component
-import Circle from "../components/common/Circle/Circle"; // Reusable Circle Component
+import Field from "../../components/common/Field/Field"; // Reusable Field Component
+import Circle from "../../components/common/Circle/Circle"; // Reusable Circle Component
 
 const ForgotPasswordPage = () => {
   const [email, setEmail] = useState("");

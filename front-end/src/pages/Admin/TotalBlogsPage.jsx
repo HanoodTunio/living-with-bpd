@@ -10,7 +10,7 @@ import {
 import { useNavigate } from "react-router-dom"; // for navigation
 import VisibilityIcon from "@mui/icons-material/Visibility"; // View Icon
 import DeleteIcon from "@mui/icons-material/Delete"; // Delete Icon
-import CustomButton from "../components/common/CustomButton/CustomButton"; // Import the CustomButton component
+import CustomButton from "../../components/common/CustomButton/CustomButton"; // Import the CustomButton component
 
 const TotalBlogsPage = () => {
   const [blogs, setBlogs] = useState([]); // State to store the blog data

@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom"; // for navigation
 import DeleteIcon from "@mui/icons-material/Delete"; // Delete Icon
-import CustomButton from "../components/common/CustomButton/CustomButton"; // Import the CustomButton component
+import CustomButton from "../../components/common/CustomButton/CustomButton"; // Import the CustomButton component
 
 const TotalEventsPage = () => {
   const [events, setEvents] = useState([]); // State to store event data
