@@ -6,6 +6,11 @@ import LoginPage from "../pages/LoginPage";
 import GalleryPage from "../pages/GalleryPage";
 import EventPage from "../pages/EventPage";
 import BlogPage from "../pages/BlogsPage";
+import AdminPage from "../pages/Admin/AdminPage";
+import TotalBlogs from "../pages/Admin/TotalBlogsPage";
+import TotalEvents from "../pages/Admin/TotalEventsPage";
+import CreateEvent from "../pages/Admin/CreateEventPage";
+import CreateBlog from "../pages/Admin/CreateBlogPage";
 import ResourcePage from "../pages/ResourcesPage";
 import BlogDetail from "../pages/BlogDetailPage";
 import SignUpPage from "../pages/User/SignUpPage";
@@ -67,6 +72,13 @@ const Routing = () => {
       <Route path="/resources" element={<ResourcePage />} />
       <Route path="/blogs" element={<BlogPage />} />
       <Route path="/blogs/:title" element={<BlogDetail />} />
+
+      {/* Admin routes*/}
+      <Route path="/admin-dashboard" element={<AdminPage />} />
+      <Route path="/admin-dashboard/total-blogs" element={<TotalBlogs />} />
+      <Route path="/admin-dashboard/total-events" element={<TotalEvents />} />
+      <Route path="/admin-dashboard/create-events" element={<CreateEvent />} />
+      <Route path="//admin-dashboard/create-blogs" element={<CreateBlog />} />
     </Routes>
   );
 };

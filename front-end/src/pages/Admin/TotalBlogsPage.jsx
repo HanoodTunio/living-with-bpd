@@ -21,18 +21,6 @@ const TotalBlogsPage = () => {
 
   // Fetch data when the page loads
   useEffect(() => {
-    // API call (currently commented for future use)
-    // fetch("/api/blogs")
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     setBlogs(data);
-    //     setLoading(false);
-    //   })
-    //   .catch((err) => {
-    //     setError("Failed to fetch blogs");
-    //     setLoading(false);
-    //   });
-
     // Dummy Data for testing
     const dummyBlogs = [
       { id: 1, title: "How to Learn React" },
@@ -45,14 +33,38 @@ const TotalBlogsPage = () => {
     setTimeout(() => {
       setBlogs(dummyBlogs); // Set the dummy blogs data to the state after 2 seconds
       setLoading(false); // Set loading to false after setting the data
-    }, 2000); // Simulate an API response delay
+    }, 1000); // Simulate an API response delay
   }, []);
 
   return (
-    <Container maxWidth="lg" sx={{ padding: "20px" }}>
+    <Container
+      maxWidth={false} // No max width, so it takes up the full screen width
+      sx={{
+        padding: 0, // Remove padding to make full width
+        backgroundImage: "url('/src/assets/images/backgroundColor.jpg')", // Add your image path here
+        backgroundSize: "cover", // Ensure it covers the full container
+        backgroundPosition: "center", // Center the background image
+        backgroundAttachment: "fixed", // Keep background fixed during scroll
+        minHeight: "100vh", // Ensure the container fills the entire screen height
+        display: "flex", // Flexbox layout
+        flexDirection: "column", // Stack elements vertically
+        justifyContent: "center", // Vertically center the content
+      }}
+    >
       <Box sx={{ textAlign: "center", marginBottom: "50px" }}>
-        <Typography variant="h4" color="primary" sx={{ fontWeight: "bold" }}>
-          Total Blogs
+        {/* Professional Heading */}
+        <Typography
+          variant="h3"
+          color="primary"
+          sx={{
+            fontWeight: "500",
+            fontSize: "2rem", // Adjust font size for a professional look
+            letterSpacing: "1px", // Add letter spacing for a clean look
+            textTransform: "uppercase", // Transform text to uppercase for emphasis
+            marginBottom: "20px", // Margin below the heading
+          }}
+        >
+          Blog Management Dashboard
         </Typography>
 
         {/* Navigation Buttons */}
@@ -67,14 +79,16 @@ const TotalBlogsPage = () => {
             text="Back"
             variant="contained"
             size="medium"
-            onClick={() => navigate("/admin")} // Back to Admin Dashboard
+            onClick={() => {
+              navigate("/admin-dashboard");
+            }}
             sx={{ margin: "10px" }}
           />
           <CustomButton
             text="View Events"
             variant="contained"
             size="medium"
-            onClick={() => navigate("/total-events")} // Navigate to Total Events page
+            onClick={() => navigate("/admin-dashboard/total-events")} // Navigate to Total Events page
             sx={{ margin: "10px" }}
           />
         </Box>
@@ -96,10 +110,17 @@ const TotalBlogsPage = () => {
           </Typography>
         ) : (
           // Display the table when data is available
-          <Box sx={{ overflowX: "auto", marginTop: "20px" }}>
+          <Box
+            sx={{
+              overflowX: "auto",
+              marginTop: "20px",
+              width: "70%",
+              margin: "0 auto",
+            }}
+          >
             <table
               style={{
-                width: "100%",
+                width: "100%", // Table fills its container
                 marginTop: "20px",
                 backgroundColor: "transparent", // Transparent background
                 borderCollapse: "collapse", // Ensures no gap between table cells

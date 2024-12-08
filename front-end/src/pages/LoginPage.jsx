@@ -12,10 +12,17 @@ const LoginPage = () => {
   const navigate = useNavigate(); // Use navigate hook to navigate programmatically
 
   const handleLogin = () => {
-    if (!username || !password) {
+    // Hardcoded credentials for admin login
+    const adminUsername = "admin";
+    const adminPassword = "admin123";
+
+    // Check if the entered username and password match the admin credentials
+    if (username === adminUsername && password === adminPassword) {
+      navigate("/admin-dashboard"); // Navigate to the admin dashboard if credentials match
+    } else if (!username || !password) {
       alert("Please enter both username and password.");
     } else {
-      navigate("/user-dashboard");
+      alert("Invalid username or password.");
     }
   };
 

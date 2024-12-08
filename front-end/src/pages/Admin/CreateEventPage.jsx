@@ -6,6 +6,7 @@ import BlogTitleField from "../../components/common/InputWithLabel/InputWithLabe
 import RichTextEditor from "../../components/common/RichTextEditor/RichTextEditor";
 import CustomButton from "../../components/common/CustomButton/CustomButton";
 import ImageUploadWithLabel from "../../components/common/ImageUploadWithLabel/ImageUploadWithLabel";
+import backgroundImage from "../../assets/images/backgroundColor.jpg"; // Adjust this path accordingly
 
 const CreateEventPage = () => {
   const [activeStep, setActiveStep] = useState(0);
@@ -39,7 +40,12 @@ const CreateEventPage = () => {
   };
 
   const handleBack = () => {
-    setActiveStep((prevStep) => Math.max(prevStep - 1, 0));
+    console.log("Back button clicked!"); // Debugging log
+    setActiveStep((prevStep) => {
+      const newStep = Math.max(prevStep - 1, 0);
+      console.log("New active step:", newStep); // Debugging log
+      return newStep;
+    });
   };
 
   const handleImageChange = (event) => {
@@ -55,6 +61,12 @@ const CreateEventPage = () => {
         flexDirection: "column",
         minHeight: "100vh",
         padding: "32px",
+        backgroundImage: `url(${backgroundImage})`, // Background image
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        alignItems: "center", // Center horizontally
+        justifyContent: "center", // Center vertically
       }}
     >
       {/* Header Section */}
@@ -65,6 +77,7 @@ const CreateEventPage = () => {
           marginBottom: "16px",
           display: "flex",
           alignItems: "center",
+          justifyContent: "flex-start",
         }}
       >
         <ArrowBackIosIcon
@@ -73,7 +86,7 @@ const CreateEventPage = () => {
             marginRight: "8px",
             color: "#1D3557",
           }}
-          onClick={() => console.log("Go back to the previous page")}
+          onClick={handleBack} // This will take you back one step
         />
         <Typography variant="h5" sx={{ fontWeight: "bold", color: "#1D3557" }}>
           Create a New Event
@@ -98,6 +111,7 @@ const CreateEventPage = () => {
             display: "flex",
             flexDirection: "column",
             justifyContent: "space-between",
+            // backgroundColor: "rgba(255, 255, 255, 0.8)", // Optional: Background for better contrast
           }}
         >
           <BlogTitleField
@@ -125,12 +139,7 @@ const CreateEventPage = () => {
             />
           </Box>
 
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "flex-end",
-            }}
-          >
+          <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
             <CustomButton text="Next" size="medium" onClick={handleNext} />
           </Box>
         </Box>
@@ -148,6 +157,7 @@ const CreateEventPage = () => {
             flexDirection: "column",
             gap: "16px",
             alignItems: "center",
+            // backgroundColor: "rgba(255, 255, 255, 0.8)", // Optional: Background for better contrast
           }}
         >
           <ImageUploadWithLabel

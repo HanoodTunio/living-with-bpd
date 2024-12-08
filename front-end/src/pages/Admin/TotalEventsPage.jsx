@@ -32,29 +32,22 @@ const TotalEventsPage = () => {
     setTimeout(() => {
       setEvents(dummyEvents); // Set the dummy events data to the state after 2 seconds
       setLoading(false); // Set loading to false after setting the data
-    }, 2000); // Simulate an API response delay
-
-    // API call (currently commented for future use)
-    // const fetchEvents = async () => {
-    //   try {
-    //     const response = await fetch("/api/events");
-    //     if (!response.ok) {
-    //       throw new Error("Failed to fetch events");
-    //     }
-    //     const data = await response.json();
-    //     setEvents(data); // Set the fetched data to the state
-    //     setLoading(false); // Set loading to false once data is fetched
-    //   } catch (error) {
-    //     setError(error.message); // Set error state if fetching fails
-    //     setLoading(false); // Set loading to false in case of error
-    //   }
-    // };
-    // fetchEvents();
+    }, 1000); // Simulate an API response delay
   }, []);
 
   return (
-    <Container maxWidth="lg" sx={{ padding: "20px" }}>
-      <Box sx={{ textAlign: "center", marginBottom: "50px" }}>
+    <Container
+      maxWidth={false} // No max width so it stretches to the full screen width
+      disableGutters // Remove default padding and margin around the container
+      sx={{
+        backgroundImage: "url('/src/assets/images/backgroundColor.jpg')", // Your background image path
+        backgroundSize: "cover", // Ensure it covers the entire container
+        backgroundPosition: "center", // Center the image
+        backgroundAttachment: "fixed", // Keep the image fixed during scroll
+        minHeight: "100vh", // Make sure the container takes the full screen height
+      }}
+    >
+      <Box sx={{ textAlign: "center", marginBottom: "50px", padding: "20px" }}>
         <Typography variant="h4" color="primary" sx={{ fontWeight: "bold" }}>
           Total Events
         </Typography>
@@ -71,14 +64,16 @@ const TotalEventsPage = () => {
             text="Back"
             variant="contained"
             size="medium"
-            onClick={() => navigate("/admin")} // Back to Admin Dashboard
+            onClick={() => {
+              navigate("/admin-dashboard");
+            }}
             sx={{ margin: "10px" }}
           />
           <CustomButton
             text="View Blogs"
             variant="contained"
             size="medium"
-            onClick={() => navigate("/total-blogs")} // Navigate to Total Blogs page
+            onClick={() => navigate("/admin-dashboard/total-blogs")} // Navigate to Total Blogs page
             sx={{ margin: "10px" }}
           />
         </Box>
@@ -100,10 +95,17 @@ const TotalEventsPage = () => {
           </Typography>
         ) : (
           // Display the table when data is available
-          <Box sx={{ overflowX: "auto", marginTop: "20px" }}>
+          <Box
+            sx={{
+              overflowX: "auto",
+              marginTop: "20px",
+              width: "70%", // Decreased table width (you can adjust this value as needed)
+              margin: "0 auto", // Centers the table
+            }}
+          >
             <table
               style={{
-                width: "100%",
+                width: "100%", // Make sure the table fills the container width
                 marginTop: "20px",
                 backgroundColor: "transparent", // Transparent background
                 borderCollapse: "collapse", // Ensures no gap between table cells

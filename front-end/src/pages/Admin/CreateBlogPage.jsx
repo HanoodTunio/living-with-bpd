@@ -5,6 +5,7 @@ import ProgressBar from "../../components/common/ProgressBar/ProgressBar";
 import BlogTitleField from "../../components/common/InputWithLabel/InputWithLabel";
 import RichTextEditor from "../../components/common/RichTextEditor/RichTextEditor";
 import CustomButton from "../../components/common/CustomButton/CustomButton";
+import backgroundImage from "../../assets/images/backgroundColor.jpg"; // Import image
 import ImageUploadWithLabel from "../../components/common/ImageUploadWithLabel/ImageUploadWithLabel";
 
 const CreateEventPage = () => {
@@ -51,11 +52,13 @@ const CreateEventPage = () => {
   return (
     <Box
       sx={{
-        display: "flex",
-        flexDirection: "column",
-        minHeight: "100vh",
-        padding: "32px",
-        gap: "24px", // Add spacing between major sections
+        padding: "20px",
+        position: "relative",
+        backgroundImage: `url(${backgroundImage})`, // Background image
+        backgroundSize: "cover", // Make the image cover the entire container
+        backgroundPosition: "center", // Center the background image
+        backgroundRepeat: "no-repeat", // Prevent background image from repeating
+        minHeight: "100vh", // Ensure the background covers the full height of the viewport
       }}
     >
       {/* Header Section */}
@@ -78,7 +81,7 @@ const CreateEventPage = () => {
           onClick={() => console.log("Go back to the previous page")}
         />
         <Typography variant="h5" sx={{ fontWeight: "bold", color: "#1D3557" }}>
-          Create a New Event
+          Create a New Blog
         </Typography>
       </Box>
 
@@ -106,6 +109,7 @@ const CreateEventPage = () => {
           display: "flex",
           flexDirection: "column",
           gap: "24px", // Consistent spacing between child components
+          //  backgroundColor: "rgba(255, 255, 255, 0.8)", // Slightly transparent background to contrast with image
         }}
       >
         {activeStep === 0 && (
