@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Box, Typography, Button, Alert, AlertTitle } from "@mui/material";
+import React, { useState, useEffect } from "react";
+import { Box, Typography, Alert, AlertTitle } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import Field from "../../components/common/Field/Field"; // Reusable Field Component
 import Circle from "../../components/common/Circle/Circle"; // Reusable Circle Component
@@ -7,13 +7,17 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import EmailIcon from "@mui/icons-material/Email";
 import LockIcon from "@mui/icons-material/Lock";
 import GoogleIcon from "@mui/icons-material/Google";
+import CustomButton from "../../components/common/CustomButton/CustomButton"; // Import your custom button
 
 // Firebase Auth imports
-import { auth } from "../../firebase/firebase"; // Make sure you import auth from your firebase config
+import { auth, googleAuthProvider } from "../../firebase/firebase"; // Ensure correct firebase imports
 import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
-} from "firebase/auth";
+  signInWithPopup,
+  onAuthStateChanged,
+  GoogleAuthProvider,
+} from "firebase/auth"; // Import the correct Firebase Auth methods
 
 const SignUpPage = () => {
   const [formData, setFormData] = useState({
@@ -28,7 +32,9 @@ const SignUpPage = () => {
     password: "",
   });
 
-  const [verificationMessage, setVerificationMessage] = useState(""); // State to show the verification message
+  const [verificationMessage, setVerificationMessage] = useState("");
+  const [googleError, setGoogleError] = useState(""); // Google login error message
+  const [isEmailVerified, setIsEmailVerified] = useState(false); // Track email verification
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -77,7 +83,6 @@ const SignUpPage = () => {
     // Firebase Authentication - Create User
     createUserWithEmailAndPassword(auth, formData.email, formData.password)
       .then((userCredential) => {
-        // Signed up successfully
         const user = userCredential.user;
         console.log("User signed up: ", user);
 
@@ -116,6 +121,72 @@ const SignUpPage = () => {
       });
   };
 
+  const handleGoogleSignIn = async () => {
+    const provider = new GoogleAuthProvider();
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+      console.log("Google User:", user);
+
+      // After successful Google sign-in, check if it's a new user or an existing one
+      const userExists =
+        user.metadata.creationTime === user.metadata.lastSignInTime;
+
+      if (userExists) {
+        console.log("New user registered via Google");
+
+        // Ensure persistence is set to LOCAL to keep the user logged in
+        auth.setPersistence("local").then(() => {
+          navigate("/user-dashboard"); // Redirect after successful login/registration
+        });
+      } else {
+        console.log("Existing Google user logged in");
+
+        // Again ensure persistence and then navigate
+        auth.setPersistence("local").then(() => {
+          navigate("/user-dashboard"); // Redirect after successful login
+        });
+      }
+    } catch (error) {
+      console.error("Google sign-in error:", error);
+      if (error.code === "auth/popup-closed-by-user") {
+        setGoogleError(
+          "The popup was closed before completing the sign-in. Please try again."
+        );
+      } else if (error.code === "auth/network-request-failed") {
+        setGoogleError(
+          "Network error. Please check your connection and try again."
+        );
+      } else if (error.code === "auth/cancelled-popup-request") {
+        setGoogleError("Sign-in was cancelled. Please try again.");
+      } else {
+        setGoogleError("Failed to sign in with Google. Please try again.");
+      }
+    }
+  };
+
+  useEffect(() => {
+    // Listen to auth state changes to navigate the user to their dashboard after successful login
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // Only navigate to dashboard if user email is verified
+        if (user.emailVerified) {
+          setIsEmailVerified(true);
+        } else {
+          setVerificationMessage("Please verify your email before continuing.");
+        }
+      }
+    });
+
+    return () => unsubscribe(); // Cleanup listener on unmount
+  }, []);
+
+  useEffect(() => {
+    if (isEmailVerified) {
+      navigate("/user-dashboard");
+    }
+  }, [isEmailVerified, navigate]); // Trigger navigation only after email is verified
+
   return (
     <Box
       sx={{
@@ -148,14 +219,12 @@ const SignUpPage = () => {
           borderRadius: "16px",
           textAlign: "center",
           boxSizing: "border-box",
-          // backgroundColor: "white",
-          //boxShadow: 2,
         }}
       >
         {/* Logo Section */}
         <Box
           component="img"
-          src="src/assets/images/logo.webp" // Replace with correct path to logo
+          src="src/assets/images/logo.webp" // Ensure correct path to your logo
           alt="Logo"
           sx={{
             marginBottom: "24px",
@@ -180,26 +249,20 @@ const SignUpPage = () => {
         <Typography
           variant="body2"
           sx={{
-            color: "rgba(0, 0, 0, 0.6)",
             marginBottom: "24px",
+            color: "#555",
           }}
         >
           Already have an account?{" "}
           <Link
-            to="/login" // Navigate to Login page
-            style={{
-              color: "#004494",
-              textDecoration: "underline",
-              fontWeight: "bold",
-              position: "relative",
-              zIndex: 1,
-            }}
+            to="/login"
+            style={{ textDecoration: "none", color: "#0073e6" }}
           >
-            Login
+            Log in
           </Link>
         </Typography>
 
-        {/* Input Fields with Error Messages Above */}
+        {/* Username */}
         <Box sx={{ marginBottom: "16px", textAlign: "left" }}>
           {errors.username && (
             <Typography
@@ -210,14 +273,16 @@ const SignUpPage = () => {
             </Typography>
           )}
           <Field
-            label="User Name"
-            icon={<AccountCircleIcon style={{ color: "white" }} />}
+            label="Username"
+            icon={<AccountCircleIcon sx={{ color: "white" }} />}
             name="username"
+            type="text"
             value={formData.username}
             onChange={handleChange}
           />
         </Box>
 
+        {/* Email */}
         <Box sx={{ marginBottom: "16px", textAlign: "left" }}>
           {errors.email && (
             <Typography
@@ -229,14 +294,16 @@ const SignUpPage = () => {
           )}
           <Field
             label="Email"
-            icon={<EmailIcon style={{ color: "white" }} />}
+            icon={<EmailIcon sx={{ color: "white" }} />}
             name="email"
+            type="email"
             value={formData.email}
             onChange={handleChange}
           />
         </Box>
 
-        <Box sx={{ marginBottom: "16px", textAlign: "left" }}>
+        {/* Password */}
+        <Box sx={{ marginBottom: "24px", textAlign: "left" }}>
           {errors.password && (
             <Typography
               color="error"
@@ -247,7 +314,7 @@ const SignUpPage = () => {
           )}
           <Field
             label="Password"
-            icon={<LockIcon style={{ color: "white" }} />}
+            icon={<LockIcon sx={{ color: "white" }} />}
             name="password"
             type="password"
             value={formData.password}
@@ -255,64 +322,41 @@ const SignUpPage = () => {
           />
         </Box>
 
+        {/* Sign Up Button */}
+        <CustomButton
+          text="Sign Up"
+          onClick={handleSignUp}
+          sx={{ width: "100%" }}
+        />
+
         {/* Google Sign-In */}
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "end",
-            margin: "16px 0",
-          }}
-        >
-          <Typography
-            variant="body2"
+        <Box sx={{ marginTop: "16px" }}>
+          <CustomButton
+            text="Continue with Google"
+            variant="outlined"
+            onClick={handleGoogleSignIn}
             sx={{
-              color: "#333",
-              marginRight: "8px",
+              width: "100%",
+              borderColor: "#ddd",
+              color: "#004494",
               fontWeight: "bold",
+              padding: "10px",
             }}
-          >
-            CONTINUE WITH
-          </Typography>
-          <GoogleIcon sx={{ color: "blue", fontSize: "28px" }} />
+            icon={<GoogleIcon sx={{ color: "#004494", marginRight: "8px" }} />}
+          />
         </Box>
 
-        {/* Sign-Up Button */}
-        <Button
-          variant="contained"
-          fullWidth
-          sx={{
-            background: "linear-gradient(90deg, #004494, #008456)",
-            color: "#fff",
-            padding: "10px 16px",
-            borderRadius: "8px",
-            fontWeight: "bold",
-            textTransform: "none",
-            marginTop: "16px",
-            "&:hover": {
-              background: "linear-gradient(90deg, #0057B7, #00A86B)",
-            },
-          }}
-          onClick={handleSignUp}
-        >
-          Sign Up
-        </Button>
-
-        {/* Verification message styled professionally */}
+        {/* Verification or Error Message */}
         {verificationMessage && (
-          <Alert
-            severity="success"
-            sx={{
-              marginTop: "16px",
-              borderRadius: "8px",
-              padding: "10px",
-              boxShadow: 1,
-            }}
-          >
-            <AlertTitle sx={{ fontWeight: "bold" }}>
-              Verification Sent
-            </AlertTitle>
+          <Alert severity="info" sx={{ marginTop: "24px" }}>
+            <AlertTitle>Info</AlertTitle>
             {verificationMessage}
+          </Alert>
+        )}
+        {googleError && (
+          <Alert severity="error" sx={{ marginTop: "16px" }}>
+            <AlertTitle>Error</AlertTitle>
+            {googleError}
           </Alert>
         )}
       </Box>

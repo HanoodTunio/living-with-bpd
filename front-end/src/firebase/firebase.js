@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
+import { getAuth, GoogleAuthProvider } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 // Your Firebase config object
@@ -17,4 +17,10 @@ const app = initializeApp(firebaseConfig);
 
 // Initialize Firebase Auth and Firestore
 export const auth = getAuth(app);  // Pass the initialized app to getAuth
+auth.useDeviceLanguage(); // Ensures proper locale
+auth.settings = {
+    // Ensure this line allows proper cross-origin behavior
+    isCORSRequest: true,
+};
+export const googleAuthProvider = new GoogleAuthProvider();
 export const db = getFirestore(app);  // Pass the initialized app to getFirestore
