@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Typography, Button } from "@mui/material";
+import { Box, Typography, Button, Alert, AlertTitle } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import Field from "../../components/common/Field/Field"; // Reusable Field Component
 import Circle from "../../components/common/Circle/Circle"; // Reusable Circle Component
@@ -7,6 +7,13 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import EmailIcon from "@mui/icons-material/Email";
 import LockIcon from "@mui/icons-material/Lock";
 import GoogleIcon from "@mui/icons-material/Google";
+
+// Firebase Auth imports
+import { auth } from "../../firebase/firebase"; // Make sure you import auth from your firebase config
+import {
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+} from "firebase/auth";
 
 const SignUpPage = () => {
   const [formData, setFormData] = useState({
@@ -21,6 +28,7 @@ const SignUpPage = () => {
     password: "",
   });
 
+  const [verificationMessage, setVerificationMessage] = useState(""); // State to show the verification message
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -66,11 +74,46 @@ const SignUpPage = () => {
       return;
     }
 
-    // Simulate form submission (Replace with actual backend logic in the future)
-    console.log("Form Submitted:", formData);
+    // Firebase Authentication - Create User
+    createUserWithEmailAndPassword(auth, formData.email, formData.password)
+      .then((userCredential) => {
+        // Signed up successfully
+        const user = userCredential.user;
+        console.log("User signed up: ", user);
 
-    // Simulate a successful signup by redirecting to the dashboard
-    navigate("/user-dashboard");
+        // Send email verification
+        sendEmailVerification(user)
+          .then(() => {
+            console.log("Verification email sent.");
+            setVerificationMessage(
+              "A verification email has been sent to your email address. Please verify to continue."
+            );
+          })
+          .catch((error) => {
+            console.error("Error sending verification email: ", error);
+            setVerificationMessage(
+              "There was an issue sending the verification email. Please try again."
+            );
+          });
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+
+        // Handle Firebase Errors
+        console.error("Error during sign-up: ", errorCode, errorMessage);
+        if (errorCode === "auth/email-already-in-use") {
+          setErrors((prevErrors) => ({
+            ...prevErrors,
+            email: "This email is already in use. Please try another.",
+          }));
+        } else {
+          setErrors((prevErrors) => ({
+            ...prevErrors,
+            email: errorMessage,
+          }));
+        }
+      });
   };
 
   return (
@@ -105,6 +148,8 @@ const SignUpPage = () => {
           borderRadius: "16px",
           textAlign: "center",
           boxSizing: "border-box",
+          // backgroundColor: "white",
+          //boxShadow: 2,
         }}
       >
         {/* Logo Section */}
@@ -252,6 +297,24 @@ const SignUpPage = () => {
         >
           Sign Up
         </Button>
+
+        {/* Verification message styled professionally */}
+        {verificationMessage && (
+          <Alert
+            severity="success"
+            sx={{
+              marginTop: "16px",
+              borderRadius: "8px",
+              padding: "10px",
+              boxShadow: 1,
+            }}
+          >
+            <AlertTitle sx={{ fontWeight: "bold" }}>
+              Verification Sent
+            </AlertTitle>
+            {verificationMessage}
+          </Alert>
+        )}
       </Box>
     </Box>
   );

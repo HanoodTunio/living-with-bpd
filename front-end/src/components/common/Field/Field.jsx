@@ -1,17 +1,18 @@
 import React from "react";
 import { Box, TextField, InputAdornment } from "@mui/material";
 
-const Field = ({ label, icon, type = "text", value, onChange }) => {
+const Field = ({ label, icon, type = "text", value, onChange, name, sx }) => {
   return (
     <Box sx={{ width: "100%", marginBottom: "16px" }}>
       <TextField
         variant="outlined"
         fullWidth
         type={type}
+        name={name} // Make sure `name` is set for state updates
         value={value}
         onChange={onChange}
         placeholder={label} // Placeholder text
-        slotProps={{
+        InputProps={{
           startAdornment: (
             <InputAdornment position="start">
               <Box
@@ -56,6 +57,7 @@ const Field = ({ label, icon, type = "text", value, onChange }) => {
           "& .MuiInputAdornment-root": {
             color: "white", // Icon stays white
           },
+          ...sx, // Allow for additional styling from parent component
         }}
       />
     </Box>
