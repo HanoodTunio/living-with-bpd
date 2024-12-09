@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Box, Typography, Button } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom"; // Import Link and useNavigate
+import { Link, useNavigate } from "react-router-dom";
 import Field from "../../components/common/Field/Field"; // Reusable Field Component
 import Circle from "../../components/common/Circle/Circle"; // Reusable Circle Component
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
@@ -9,8 +9,13 @@ import LockIcon from "@mui/icons-material/Lock";
 import GoogleIcon from "@mui/icons-material/Google";
 
 const SignUpPage = () => {
-  // State to manage form data
   const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
+
+  const [errors, setErrors] = useState({
     username: "",
     email: "",
     password: "",
@@ -18,7 +23,6 @@ const SignUpPage = () => {
 
   const navigate = useNavigate();
 
-  // Handle form data change
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
@@ -27,15 +31,45 @@ const SignUpPage = () => {
     }));
   };
 
-  // Handle form submission
   const handleSignUp = (e) => {
     e.preventDefault();
+
+    // Reset errors before checking
+    setErrors({
+      username: "",
+      email: "",
+      password: "",
+    });
+
+    // Simple validation check - check one field at a time
+    if (!formData.username) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        username: "Username is required!",
+      }));
+      return;
+    }
+
+    if (!formData.email) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        email: "Email is required!",
+      }));
+      return;
+    }
+
+    if (!formData.password) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        password: "Password is required!",
+      }));
+      return;
+    }
 
     // Simulate form submission (Replace with actual backend logic in the future)
     console.log("Form Submitted:", formData);
 
     // Simulate a successful signup by redirecting to the dashboard
-    // In future, you may want to make an API call here to create the user in the database
     navigate("/user-dashboard");
   };
 
@@ -46,7 +80,7 @@ const SignUpPage = () => {
         justifyContent: "center",
         alignItems: "center",
         minHeight: "100vh",
-        backgroundColor: "rgba(60, 143, 124, 0.4)", // Subtle background color with transparency
+        backgroundColor: "rgba(60, 143, 124, 0.4)",
         position: "relative",
         overflow: "hidden",
         margin: "0",
@@ -80,9 +114,9 @@ const SignUpPage = () => {
           alt="Logo"
           sx={{
             marginBottom: "24px",
-            width: "80px", // Adjust width as needed
-            height: "80px", // Adjust height or remove to maintain aspect ratio
-            objectFit: "contain", // Ensure no distortion
+            width: "80px",
+            height: "80px",
+            objectFit: "contain",
           }}
         />
 
@@ -102,14 +136,14 @@ const SignUpPage = () => {
           variant="body2"
           sx={{
             color: "rgba(0, 0, 0, 0.6)",
-            marginBottom: "24px", // Margin for spacing
+            marginBottom: "24px",
           }}
         >
           Already have an account?{" "}
           <Link
             to="/login" // Navigate to Login page
             style={{
-              color: "#004494", // Blue color for the link
+              color: "#004494",
               textDecoration: "underline",
               fontWeight: "bold",
               position: "relative",
@@ -120,32 +154,61 @@ const SignUpPage = () => {
           </Link>
         </Typography>
 
-        {/* Input Fields */}
-        <Field
-          label="User Name"
-          icon={<AccountCircleIcon style={{ color: "white" }} />} // White icon
-          name="username"
-          value={formData.username}
-          onChange={handleChange}
-          sx={{ marginBottom: "16px" }}
-        />
-        <Field
-          label="Email"
-          icon={<EmailIcon style={{ color: "white" }} />} // White icon
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          sx={{ marginBottom: "16px" }}
-        />
-        <Field
-          label="Password"
-          icon={<LockIcon style={{ color: "white" }} />} // White icon
-          name="password"
-          type="password"
-          value={formData.password}
-          onChange={handleChange}
-          sx={{ marginBottom: "16px" }}
-        />
+        {/* Input Fields with Error Messages Above */}
+        <Box sx={{ marginBottom: "16px", textAlign: "left" }}>
+          {errors.username && (
+            <Typography
+              color="error"
+              sx={{ fontSize: "0.8rem", marginBottom: "4px" }}
+            >
+              {errors.username}
+            </Typography>
+          )}
+          <Field
+            label="User Name"
+            icon={<AccountCircleIcon style={{ color: "white" }} />}
+            name="username"
+            value={formData.username}
+            onChange={handleChange}
+          />
+        </Box>
+
+        <Box sx={{ marginBottom: "16px", textAlign: "left" }}>
+          {errors.email && (
+            <Typography
+              color="error"
+              sx={{ fontSize: "0.8rem", marginBottom: "4px" }}
+            >
+              {errors.email}
+            </Typography>
+          )}
+          <Field
+            label="Email"
+            icon={<EmailIcon style={{ color: "white" }} />}
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+          />
+        </Box>
+
+        <Box sx={{ marginBottom: "16px", textAlign: "left" }}>
+          {errors.password && (
+            <Typography
+              color="error"
+              sx={{ fontSize: "0.8rem", marginBottom: "4px" }}
+            >
+              {errors.password}
+            </Typography>
+          )}
+          <Field
+            label="Password"
+            icon={<LockIcon style={{ color: "white" }} />}
+            name="password"
+            type="password"
+            value={formData.password}
+            onChange={handleChange}
+          />
+        </Box>
 
         {/* Google Sign-In */}
         <Box
