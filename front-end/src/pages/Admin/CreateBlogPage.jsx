@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, TextField } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ProgressBar from "../../components/common/ProgressBar/ProgressBar";
 import BlogTitleField from "../../components/common/InputWithLabel/InputWithLabel";
@@ -8,14 +8,17 @@ import CustomButton from "../../components/common/CustomButton/CustomButton";
 import backgroundImage from "../../assets/images/backgroundColor.jpg"; // Import image
 import ImageUploadWithLabel from "../../components/common/ImageUploadWithLabel/ImageUploadWithLabel";
 
-const CreateEventPage = () => {
+const CreateBlogPage = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [eventTitle, setEventTitle] = useState("");
   const [eventDescription, setEventDescription] = useState("");
-  const [eventLocation, setEventLocation] = useState("");
   const [bannerImage, setBannerImage] = useState(null);
 
-  const steps = ["Event Content", "Banner"];
+  // New state variables for Writer Name and Published Date
+  const [writerName, setWriterName] = useState("");
+  const [publishedDate, setPublishedDate] = useState("");
+
+  const steps = ["Blog Content", "Banner"];
 
   const handleNext = () => {
     if (activeStep === 0) {
@@ -25,15 +28,18 @@ const CreateEventPage = () => {
         alert("Please fill in all required fields!");
       }
     } else if (activeStep === 1) {
-      if (!eventLocation || !bannerImage) {
-        alert("Please upload a banner and provide a location.");
+      if (!bannerImage || !writerName || !publishedDate) {
+        alert(
+          "Please upload a banner, provide writer name, and published date."
+        );
       } else {
-        alert("Event saved successfully!");
+        alert("Blog saved successfully!");
         console.log({
           eventTitle,
           eventDescription,
-          eventLocation,
           bannerImage,
+          writerName,
+          publishedDate,
         });
       }
     }
@@ -109,13 +115,12 @@ const CreateEventPage = () => {
           display: "flex",
           flexDirection: "column",
           gap: "24px", // Consistent spacing between child components
-          //  backgroundColor: "rgba(255, 255, 255, 0.8)", // Slightly transparent background to contrast with image
         }}
       >
         {activeStep === 0 && (
           <>
             <BlogTitleField
-              label="Event Title"
+              label="Blog Title"
               placeholder="Enter the name of your Event"
               value={eventTitle}
               onChange={(e) => setEventTitle(e.target.value)}
@@ -129,12 +134,12 @@ const CreateEventPage = () => {
                   color: "#1D3557",
                 }}
               >
-                Event Description <span style={{ color: "red" }}>*</span>
+                Blog Description <span style={{ color: "red" }}>*</span>
               </Typography>
               <RichTextEditor
                 value={eventDescription}
                 onChange={setEventDescription}
-                placeholder="Write your event description here..."
+                placeholder="Write your Blog description here..."
               />
             </Box>
             <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
@@ -150,12 +155,31 @@ const CreateEventPage = () => {
               onChange={handleImageChange}
               acceptedFormats="JPG, GIF, PNG"
             />
+
+            {/* New Fields: Writer Name and Published Date */}
             <BlogTitleField
-              label="Location"
-              placeholder="Enter Location"
-              value={eventLocation}
-              onChange={(e) => setEventLocation(e.target.value)}
+              label="Writer Name"
+              placeholder="Enter the name of the writer"
+              value={writerName}
+              onChange={(e) => setWriterName(e.target.value)}
             />
+            <TextField
+              label="Published Date"
+              type="date"
+              value={publishedDate}
+              onChange={(e) => setPublishedDate(e.target.value)}
+              sx={{
+                width: "100%",
+                marginBottom: "16px",
+                "& input": {
+                  color: "#1D3557", // Change text color
+                },
+              }}
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+
             <Box
               sx={{
                 display: "flex",
@@ -181,4 +205,4 @@ const CreateEventPage = () => {
   );
 };
 
-export default CreateEventPage;
+export default CreateBlogPage;
