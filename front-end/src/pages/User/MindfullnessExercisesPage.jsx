@@ -2,10 +2,9 @@ import React from "react";
 import { Box, Typography } from "@mui/material";
 import ExerciseCard from "../../components/common/ExerciseCard/ExerciseCard";
 import ExHero from "../../components/common/ExHero/ExHero"; // Reusable ExHero Component
+import Exhero from "../../assets/images/ExHero.png";
 import ParagraphNavLink from "../../components/common/ParagraphNavLink/ParagraphNavLink";
 import exImage from "../../assets/images/ex.png"; // Exercise image
-import startImage from "../../assets/images/start.png"; // Start Here image
-import Exhero from "../../assets/images/ExHero.png";
 import Paragraph from "../../components/common/Paragraph/Paragraph"; // Paragraph component
 import UserLayout from "../../components/mainlayout/UserLayout"; // Import UserLayout
 
@@ -45,66 +44,30 @@ const MindfullnessExercisePage = () => {
             margin: "0 auto",
           }}
         >
-          {/* First Row: 3 Cards with Start Here Image */}
-          <Box
-            sx={{
-              display: "flex",
-              flexWrap: { xs: "wrap", md: "nowrap" },
-              justifyContent: { xs: "flex-start", md: "center" },
-              alignItems: "center",
-              gap: "24px",
-              width: "100%",
-            }}
-          >
-            {/* Start Here Image */}
-            <Box
-              component="img"
-              src={startImage}
-              alt="Start Here"
-              sx={{
-                width: { xs: "150px", md: "230px" },
-                height: "auto",
-                flexShrink: 0,
-                marginRight: { xs: "8px", md: "16px" },
-              }}
-            />
-
-            {/* Render 3 Cards in the First Row */}
-            {Array.from({ length: 3 }).map((_, index) => (
-              <ExerciseCard
-                key={`first-row-card-${index}`}
-                exerciseTitle={`Exercise M${index + 1}`} // Change to "M" for Mindfulness exercises
-                exerciseImage={exImage}
-                exerciseName={`Exercise M${index + 1}`}
-                exerciseDescription="Develop mindfulness skills to observe your thoughts non-judgmentally."
-              />
-            ))}
-          </Box>
-
-          {/* Remaining Rows: Render 4 Cards Per Row */}
+          {/* Exercise Cards: Render 4 cards per row on large/medium screens, 2 cards per row on mobile */}
           <Box
             sx={{
               display: "flex",
               flexWrap: "wrap",
               gap: "24px",
-              justifyContent: { xs: "flex-start", md: "center" },
+              justifyContent: "center",
               width: "100%",
             }}
           >
-            {Array.from({ length: totalCards - 3 }).map((_, index) => (
+            {Array.from({ length: totalCards }).map((_, index) => (
               <Box
-                key={`row-card-${index}`}
+                key={`card-${index}`}
                 sx={{
-                  flex: "1 0 calc(25% - 24px)",
-                  maxWidth: "calc(25% - 24px)",
-                  minWidth: { xs: "calc(50% - 16px)", md: "calc(25% - 24px)" },
+                  flex: "1 0 calc(25% - 24px)", // 4 cards per row on large screens
+                  maxWidth: "calc(25% - 24px)", // 4 cards per row
+                  minWidth: { xs: "calc(50% - 16px)", md: "calc(25% - 24px)" }, // 2 cards per row on mobile (xs)
                 }}
               >
                 <ExerciseCard
-                  exerciseTitle={`Exercise M${index + 4}`}
+                  exerciseTitle={`Exercise M${index + 1}`}
                   exerciseImage={exImage}
-                  exerciseName={`Exercise M${index + 4}`}
-                  exerciseDescription="Practice mindfulness techniques to enhance your emotional awareness."
+                  exerciseName={`Exercise M${index + 1}`}
+                  exerciseDescription="Develop mindfulness skills to observe your thoughts non-judgmentally."
                 />
               </Box>
             ))}

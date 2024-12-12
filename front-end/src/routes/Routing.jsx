@@ -18,7 +18,10 @@ import ForgotPasswordPage from "../pages/User/ForgotPasswordPage";
 import UserDashboardPage from "../pages/User/UserDashboardPage";
 import WorksheetPage from "../pages/User/SelectWorkSheetPage";
 import BinaryTrackerPage from "../pages/User/BinaryTrakerPage";
-import SelectExercisesPage from "../pages/User/SelectExercisesPage";
+import MindfullnessExercisesPage from "../pages/User/MindfullnessExercisesPage";
+import ToleranceExercisesPage from "../pages/User/ToleranceExercisesPage";
+import EmotionsExcercisesPage from "../pages/User/EmotionsExcercisesPage";
+import InterpersonalExercisesPage from "../pages/User/InterpersonalExcercisesPage";
 import UserProfilePage from "../pages/User/UserProfilePage";
 import DialecticalBehaviorTherapyPage from "../pages/User/DialecticalBehaviorTherapyPage";
 
@@ -50,19 +53,19 @@ const Routing = () => {
 
       <Route
         path="/user-dashboard/start-exercises/mindfulness"
-        element={<SelectExercisesPage />}
+        element={<MindfullnessExercisesPage />}
       />
       <Route
         path="/user-dashboard/start-exercises/tolerance"
-        element={<SelectExercisesPage />}
+        element={<ToleranceExercisesPage />}
       />
       <Route
         path="/user-dashboard/start-exercises/emotions"
-        element={<SelectExercisesPage />}
+        element={<EmotionsExcercisesPage />}
       />
       <Route
         path="/user-dashboard/start-exercises/Interpersonal"
-        element={<SelectExercisesPage />}
+        element={<InterpersonalExercisesPage />}
       />
 
       <Route path="signup" element={<SignUpPage />} />
