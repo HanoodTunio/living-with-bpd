@@ -1,130 +1,296 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import ExerciseCard from "../../components/common/ExerciseCard/ExerciseCard";
-import ExHero from "../../components/common/ExHero/ExHero"; // Reusable ExHero Component
-import Exhero from "../../assets/images/emotionEx.png"; // Updated Hero Image
+import ExHero from "../../components/common/ExHero/ExHero";
+import Exhero from "../../assets/images/emotionEx.png";
 import ParagraphNavLink from "../../components/common/ParagraphNavLink/ParagraphNavLink";
-import exImage from "../../assets/images/ex.png"; // Exercise image
-import Paragraph from "../../components/common/Paragraph/Paragraph"; // Paragraph component
-import UserLayout from "../../components/mainlayout/UserLayout"; // Import UserLayout
+import exImage from "../../assets/images/ex.png";
+import Paragraph from "../../components/common/Paragraph/Paragraph";
+import UserLayout from "../../components/mainlayout/UserLayout";
 
 const EmotionsExercisesPage = () => {
-  const totalCards = 10;
+  const exercises = [
+    {
+      name: "Recognizing Your Emotions",
+      description:
+        "Recognize primary emotions and secondary emotions that follow to understand emotional patterns.",
+    },
+    {
+      name: "Being Effective",
+      description:
+        "Set goals and create actionable steps to help you reach those goals, improving effectiveness in daily life.",
+    },
+    {
+      name: "Emotions & Physical Vulnerability",
+      description:
+        "Understand how your habits influence your well-being and identify what needs to change for a healthier emotional state.",
+    },
+    {
+      name: "Emotions & Cognitive Vulnerability",
+      description:
+        "Examine cognitive distortions in your thinking patterns and make adjustments to improve emotional regulation.",
+    },
+    {
+      name: "Self Validation",
+      description:
+        "Accept your emotions as they are. Acknowledge, allow, and accept how you feel without judgment.",
+    },
+    {
+      name: "Myths About Emotions",
+      description:
+        "Examine common misconceptions about emotions and how they influence your behavior and emotional well-being.",
+    },
+    {
+      name: "Emotions Exposure",
+      description:
+        "Learn to avoid blocking negative emotions and become comfortable with experiencing and expressing them.",
+    },
+    {
+      name: "Balancing Emotional Urges",
+      description:
+        "Reduce ineffective emotional urges by balancing them with their opposites, bringing emotional stability.",
+    },
+    {
+      name: "Problem Solving",
+      description:
+        "Proactively prepare for difficult situations by creating a problem-solving strategy to navigate challenges.",
+    },
+    {
+      name: "Mastery & Coping Ahead",
+      description:
+        "Master essential life-building tasks and prepare yourself for future challenges instead of avoiding them.",
+    },
+  ];
 
   return (
     <UserLayout>
       <Box
         sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: { xs: "16px", md: "32px" },
           padding: { xs: "16px", md: "32px" },
           width: "100%",
           boxSizing: "border-box",
-          overflowX: "hidden", // Prevent horizontal overflow
         }}
       >
-        {/* Hero Section - Using Reusable ExHero Component */}
         <ExHero
           heroImage={Exhero}
-          heading="Emotions Regulation Techniques"
-          subHeading="DBT Skills for Managing Intense Emotions"
-          description="These exercises are designed to help you regulate overwhelming emotions and find balance. Learn skills to navigate emotional intensity without reacting impulsively."
+          heading="Emotion Regulation Techniques"
+          subHeading="Master Emotion Regulation to Navigate Life's Challenges"
+          description="These exercises help you manage your emotions, improve resilience, and foster healthy emotional responses."
         />
 
-        {/* Exercise Cards Section */}
         <Box
           sx={{
             display: "flex",
             flexDirection: "column",
             gap: { xs: "24px", md: "40px" },
-            width: "100%",
-            maxWidth: "1200px",
-            margin: "0 auto",
           }}
         >
-          {/* Exercise Cards: Render 4 cards per row on large screens, 3 cards per row on medium, and 2 cards per row on mobile */}
           <Box
             sx={{
-              display: "flex",
-              flexWrap: "wrap",
+              display: "grid",
+              gridTemplateColumns: "repeat(1, 1fr)",
               gap: "24px",
-              justifyContent: "center",
+              justifyItems: "center",
               width: "100%",
+              maxWidth: "1300px",
+              margin: "0 auto",
+              "@media (min-width: 600px)": {
+                gridTemplateColumns: "repeat(2, 1fr)",
+              },
+              "@media (min-width: 900px)": {
+                gridTemplateColumns: "repeat(3, 1fr)",
+              },
+              "@media (min-width: 1200px)": {
+                gridTemplateColumns: "repeat(4, 1fr)",
+              },
             }}
           >
-            {Array.from({ length: totalCards }).map((_, index) => (
+            {exercises.map((exercise, index) => (
               <Box
                 key={`card-${index}`}
                 sx={{
-                  flex: "1 0 calc(25% - 24px)", // 4 cards per row on large screens
-                  maxWidth: "calc(25% - 24px)", // 4 cards per row
-                  minWidth: {
-                    xs: "calc(50% - 16px)", // 2 cards per row on mobile (xs)
-                    sm: "calc(33.33% - 16px)", // 3 cards per row on medium (sm)
-                    lg: "calc(25% - 24px)", // 4 cards per row on large (lg)
-                  },
+                  paddingY: { xs: "16px", sm: "24px" },
+                  width: "100%",
+                  height: "350px",
                 }}
               >
                 <ExerciseCard
-                  exerciseTitle={`Emotions Regulation ${index + 1}`}
+                  exerciseTitle={`Exercise T${index + 1}`}
                   exerciseImage={exImage}
-                  exerciseName={`Skill ${index + 1}`} // Update names for emotions regulation skills
-                  exerciseDescription="Learn effective skills to manage your emotions and create a sense of balance in difficult moments."
+                  exerciseName={exercise.name}
+                  exerciseDescription={exercise.description}
                 />
               </Box>
             ))}
           </Box>
-        </Box>
 
-        {/* Navigation Links Section */}
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            gap: "32px",
-            marginTop: "24px",
-            flexWrap: "wrap",
-          }}
-        >
-          <ParagraphNavLink
-            label="What is Emotions Regulation?"
-            href="#what-is-emotions-regulation"
-          />
-          <ParagraphNavLink
-            label="Why Practice Emotions Regulation?"
-            href="#why-practice-emotions-regulation"
-          />
-          <ParagraphNavLink label="How It Works" href="#how-it-works" />
-        </Box>
+          <Box sx={{ width: "100%", maxWidth: "1000px", margin: "0 auto" }}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                gap: "32px",
+                marginTop: "24px",
+                flexWrap: "wrap",
+                paddingY: { xs: "16px", sm: "32px" },
+              }}
+            >
+              <ParagraphNavLink
+                label="What is Emotion Regulation?"
+                href="#what-is-emotion-regulation"
+              />
+              <ParagraphNavLink
+                label="How Does It Help?"
+                href="#how-does-it-help"
+              />
+              <ParagraphNavLink
+                label="Importance of Emotion Regulation"
+                href="#importance-of-emotion-regulation"
+              />
+              <ParagraphNavLink label="FAQs" href="#faqs" />
+            </Box>
 
-        {/* Paragraph Section */}
-        <Box
-          sx={{
-            width: "100%",
-            maxWidth: "1350px",
-            padding: { xs: "16px", md: "32px" },
-            textAlign: "justify",
-          }}
-        >
-          <Box id="what-is-emotions-regulation">
-            <Paragraph
-              heading="What is Emotions Regulation?"
-              content="Emotions Regulation refers to the ability to manage and modify intense emotions in a healthy way. It involves using techniques to help you respond to emotional experiences without being overwhelmed or acting impulsively."
-            />
-          </Box>
-          <Box id="why-practice-emotions-regulation">
-            <Paragraph
-              heading="Why Practice Emotions Regulation?"
-              content="Practicing emotions regulation helps in reducing emotional reactivity, preventing impulsive behaviors, and building resilience. It enhances emotional intelligence and fosters better interpersonal relationships."
-            />
-          </Box>
-          <Box id="how-it-works">
-            <Paragraph
-              heading="How It Works"
-              content="Emotions regulation skills help you stay grounded in emotional situations. Techniques like 'Mindfulness', 'Self-Soothing', and 'Cognitive Restructuring' teach you how to respond thoughtfully, rather than react impulsively."
-            />
+            <Box
+              sx={{
+                padding: { xs: "16px", md: "32px" },
+                textAlign: "justify",
+                marginTop: "40px",
+              }}
+            >
+              <Box id="what-is-emotion-regulation">
+                <Paragraph
+                  heading="What is Emotion Regulation?"
+                  content={
+                    <>
+                      <p>
+                        Emotion regulation is the process of managing and
+                        responding to your emotional storms in healthy and
+                        constructive ways. It involves recognizing and
+                        understanding your emotions, and choosing how to express
+                        and act on them.
+                      </p>
+                      <p>
+                        Imagine your emotions as a series of unpredictable
+                        weather patterns. Learning emotion regulation helps you
+                        navigate these storms and take control of your emotional
+                        landscape.
+                      </p>
+                    </>
+                  }
+                />
+              </Box>
+
+              <Box id="how-does-it-help">
+                <Paragraph
+                  heading="How Does Emotion Regulation Help?"
+                  content={
+                    <>
+                      <p>
+                        Emotion regulation skills help you manage your emotions
+                        more effectively, improving your emotional resilience
+                        and mental health. These techniques help reduce
+                        emotional suffering, boost mindfulness, and provide
+                        strategies for changing unwanted emotions.
+                      </p>
+                    </>
+                  }
+                />
+              </Box>
+
+              <Box id="importance-of-emotion-regulation">
+                <Paragraph
+                  heading="Why is Emotion Regulation Important?"
+                  content={
+                    <>
+                      <p>
+                        Emotion regulation skills are critical for emotional
+                        well-being. They help you navigate life's challenges,
+                        maintain healthy relationships, and improve overall
+                        mental health. Proper emotional regulation can lead to
+                        better job performance, improved social interactions,
+                        and a more positive outlook on life.
+                      </p>
+                      <p>
+                        Without emotion regulation, you may experience mood
+                        swings, impulsive behaviors, and heightened stress
+                        levels that can affect your personal and professional
+                        life.
+                      </p>
+                    </>
+                  }
+                />
+              </Box>
+
+              {/* New Consequences of Poor Emotion Regulation Section */}
+              <Box id="consequences-of-poor-regulation">
+                <Paragraph
+                  heading="Consequences of Poor Emotion Regulation"
+                  content={
+                    <>
+                      <p>
+                        <strong>Problems in Relationships:</strong> Poor emotion
+                        regulation skills often lead to overreactions or
+                        inappropriate responses in social interactions, causing
+                        strain in relationships with family, friends, and at
+                        work.
+                      </p>
+                      <p>
+                        <strong>Poor Physical and Mental Health:</strong>{" "}
+                        Ineffective management of emotions can contribute to
+                        stress, anxiety, and depression, adversely affecting
+                        overall physical health, including increased risk of
+                        heart disease and weakened immune response.
+                      </p>
+                      <p>
+                        <strong>Impulsive Behavior:</strong> Difficulty in
+                        controlling emotions often results in impulsive
+                        decisions and actions, leading to risky behavior and
+                        potential negative consequences in various aspects of
+                        life.
+                      </p>
+                      <p>
+                        <strong>Reduced Quality of Life:</strong> Chronic
+                        struggles with emotion regulation can diminish life
+                        satisfaction, leading to a pervasive sense of
+                        unhappiness and a decreased ability to enjoy daily
+                        activities and achievements.
+                      </p>
+                    </>
+                  }
+                />
+              </Box>
+
+              <Box id="faqs">
+                <Paragraph
+                  heading="FAQs"
+                  content={
+                    <>
+                      <p>
+                        <strong>
+                          Q: What is the first step in practicing emotion
+                          regulation?
+                        </strong>
+                      </p>
+                      <p>
+                        A: The first step is recognizing and labeling your
+                        emotions to understand the intensity of your feelings.
+                      </p>
+
+                      <p>
+                        <strong>
+                          Q: How do I deal with overwhelming emotions?
+                        </strong>
+                      </p>
+                      <p>
+                        A: Practice grounding techniques, engage in mindfulness
+                        exercises, and implement self-soothing activities to
+                        reduce emotional intensity.
+                      </p>
+                    </>
+                  }
+                />
+              </Box>
+            </Box>
           </Box>
         </Box>
       </Box>
