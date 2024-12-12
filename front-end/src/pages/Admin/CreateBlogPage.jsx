@@ -1,26 +1,36 @@
 import React, { useState } from "react";
-import { Box, Typography, TextField } from "@mui/material";
+import {
+  Box,
+  Typography,
+  TextField,
+  Snackbar,
+  Alert,
+  Grid2,
+} from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ProgressBar from "../../components/common/ProgressBar/ProgressBar";
 import BlogTitleField from "../../components/common/InputWithLabel/InputWithLabel";
 import RichTextEditor from "../../components/common/RichTextEditor/RichTextEditor";
 import CustomButton from "../../components/common/CustomButton/CustomButton";
-import backgroundImage from "../../assets/images/backgroundColor.jpg"; // Import image
+import backgroundImage from "../../assets/images/backgroundColor.jpg";
 import ImageUploadWithLabel from "../../components/common/ImageUploadWithLabel/ImageUploadWithLabel";
+import { db } from "../../firebase/firebase";
+import { collection, addDoc } from "firebase/firestore";
 
 const CreateBlogPage = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [eventTitle, setEventTitle] = useState("");
   const [eventDescription, setEventDescription] = useState("");
   const [bannerImage, setBannerImage] = useState(null);
-
-  // New state variables for Writer Name and Published Date
   const [writerName, setWriterName] = useState("");
   const [publishedDate, setPublishedDate] = useState("");
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
 
   const steps = ["Blog Content", "Banner"];
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (activeStep === 0) {
       if (eventTitle && eventDescription) {
         setActiveStep((prevStep) => prevStep + 1);
@@ -33,14 +43,7 @@ const CreateBlogPage = () => {
           "Please upload a banner, provide writer name, and published date."
         );
       } else {
-        alert("Blog saved successfully!");
-        console.log({
-          eventTitle,
-          eventDescription,
-          bannerImage,
-          writerName,
-          publishedDate,
-        });
+        await resizeAndStoreImage();
       }
     }
   };
@@ -51,39 +54,99 @@ const CreateBlogPage = () => {
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
-    setBannerImage(file);
-    console.log("Selected file:", file);
+    if (file) {
+      setBannerImage(file);
+      console.log("Selected file:", file);
+    }
+  };
+
+  const resizeAndStoreImage = async () => {
+    try {
+      if (!bannerImage) throw new Error("No image selected!");
+
+      const img = new Image();
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        img.onload = async () => {
+          const canvas = document.createElement("canvas");
+          const maxWidth = 800;
+          const maxHeight = 800;
+          let width = img.width;
+          let height = img.height;
+
+          if (width > maxWidth || height > maxHeight) {
+            const aspectRatio = width / height;
+            if (width > height) {
+              width = maxWidth;
+              height = width / aspectRatio;
+            } else {
+              height = maxHeight;
+              width = height * aspectRatio;
+            }
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(img, 0, 0, width, height);
+
+          const base64Image = canvas.toDataURL("image/jpeg", 0.8);
+
+          const blogData = {
+            title: eventTitle,
+            description: eventDescription,
+            imageURL: base64Image,
+            writerName,
+            publishedDate,
+          };
+
+          const docRef = await addDoc(collection(db, "blogs"), blogData);
+          console.log("Blog saved successfully with doc ID:", docRef.id);
+
+          setSnackbarMessage("Your blog has been published successfully!");
+          setSnackbarSeverity("success");
+          setSnackbarOpen(true);
+        };
+        img.src = reader.result;
+      };
+
+      reader.readAsDataURL(bannerImage);
+    } catch (error) {
+      console.error("Error saving blog data:", error);
+      setSnackbarMessage("Failed to save blog. Please try again.");
+      setSnackbarSeverity("error");
+      setSnackbarOpen(true);
+    }
+  };
+
+  const handleCloseSnackbar = () => {
+    setSnackbarOpen(false);
   };
 
   return (
     <Box
       sx={{
-        padding: "20px",
+        padding: "16px",
         position: "relative",
-        backgroundImage: `url(${backgroundImage})`, // Background image
-        backgroundSize: "cover", // Make the image cover the entire container
-        backgroundPosition: "center", // Center the background image
-        backgroundRepeat: "no-repeat", // Prevent background image from repeating
-        minHeight: "100vh", // Ensure the background covers the full height of the viewport
+        backgroundImage: `url(${backgroundImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        minHeight: "100vh",
       }}
     >
       {/* Header Section */}
       <Box
         sx={{
-          width: "100%",
-          maxWidth: "900px",
-          marginBottom: "16px",
           display: "flex",
           alignItems: "center",
-          margin: "0 auto", // Center-align the header
+          marginBottom: "16px",
+          justifyContent: "center",
         }}
       >
         <ArrowBackIosIcon
-          sx={{
-            cursor: "pointer",
-            marginRight: "8px",
-            color: "#1D3557",
-          }}
+          sx={{ cursor: "pointer", marginRight: "8px", color: "#1D3557" }}
           onClick={() => console.log("Go back to the previous page")}
         />
         <Typography variant="h5" sx={{ fontWeight: "bold", color: "#1D3557" }}>
@@ -92,29 +155,21 @@ const CreateBlogPage = () => {
       </Box>
 
       {/* Progress Bar */}
-      <Box
-        sx={{
-          width: "100%",
-          maxWidth: "900px",
-          marginBottom: "22px",
-          margin: "0 auto", // Center-align progress bar
-        }}
-      >
+      <Box sx={{ marginBottom: "22px", maxWidth: "900px", margin: "0 auto" }}>
         <ProgressBar steps={steps} activeStep={activeStep} />
       </Box>
 
       {/* Steps Section */}
       <Box
         sx={{
-          width: "100%",
           maxWidth: "900px",
           borderRadius: "16px",
-          padding: "32px",
+          padding: "16px",
           minHeight: "500px",
-          margin: "0 auto", // Center the steps container
+          margin: "0 auto",
           display: "flex",
           flexDirection: "column",
-          gap: "24px", // Consistent spacing between child components
+          gap: "16px",
         }}
       >
         {activeStep === 0 && (
@@ -128,11 +183,7 @@ const CreateBlogPage = () => {
             <Box>
               <Typography
                 variant="body1"
-                sx={{
-                  fontWeight: "bold",
-                  marginBottom: "8px",
-                  color: "#1D3557",
-                }}
+                sx={{ fontWeight: "bold", marginBottom: "8px" }}
               >
                 Blog Description <span style={{ color: "red" }}>*</span>
               </Typography>
@@ -155,8 +206,6 @@ const CreateBlogPage = () => {
               onChange={handleImageChange}
               acceptedFormats="JPG, GIF, PNG"
             />
-
-            {/* New Fields: Writer Name and Published Date */}
             <BlogTitleField
               label="Writer Name"
               placeholder="Enter the name of the writer"
@@ -164,42 +213,55 @@ const CreateBlogPage = () => {
               onChange={(e) => setWriterName(e.target.value)}
             />
             <TextField
-              label="Published Date"
               type="date"
+              label="Published Date"
               value={publishedDate}
               onChange={(e) => setPublishedDate(e.target.value)}
+              fullWidth
+              InputLabelProps={{
+                shrink: true, // Ensures the label is always visible
+              }}
               sx={{
-                width: "100%",
-                marginBottom: "16px",
-                "& input": {
-                  color: "#1D3557", // Change text color
+                "& .MuiInputBase-root": {
+                  paddingRight: "0px", // Adjusts padding to fix the field display
                 },
               }}
-              InputLabelProps={{
-                shrink: true,
-              }}
             />
-
+            {/* Buttons Section */}
             <Box
               sx={{
                 display: "flex",
-                justifyContent: "space-between",
+                justifyContent: "flex-end",
                 marginTop: "16px",
+                gap: "16px",
               }}
             >
               <CustomButton
-                text="Go back to edit"
+                text="Back"
                 size="medium"
                 onClick={handleBack}
+                fullWidth
               />
               <CustomButton
-                text="Save and Continue"
+                text="Publish Blog"
                 size="medium"
                 onClick={handleNext}
+                fullWidth
               />
             </Box>
           </>
         )}
+
+        {/* Snackbar for Success/Failure */}
+        <Snackbar
+          open={snackbarOpen}
+          autoHideDuration={6000}
+          onClose={handleCloseSnackbar}
+        >
+          <Alert onClose={handleCloseSnackbar} severity={snackbarSeverity}>
+            {snackbarMessage}
+          </Alert>
+        </Snackbar>
       </Box>
     </Box>
   );
